@@ -12,7 +12,7 @@ MDFloatLayout:
         right_action_items: [["dots-vertical", lambda x: x], ["magnify", lambda x: x]]
 
     ScrollView:
-        pos_hint: {'center_y': .5, 'center_x': .5}
+        pos_hint: {"center_y": .5, "center_x": .5}
         size_hint: .9, .8
         bar_width: 10
 
@@ -23,7 +23,7 @@ MDFloatLayout:
         elevation:0
 
         MDTopAppBar:
-            icon: 'plus-thick'
+            icon: "plus-thick"
             title: "bottom bar"
             type: "bottom"
             left_action_items: [["filter", lambda x: x]]
@@ -31,42 +31,46 @@ MDFloatLayout:
             on_action_button: app.show_task_dialog()
             elevation: 0
             elevation_normal: 0
-            # pos_hint: {'x': .8, 'y':.05}
+            # pos_hint: {"x": .8, "y":.05}
 
 <DialogContent>:
     orientation: "vertical"
-    spacing: "10dp"
+    spacing: "5dp"
     size_hint: 1, None
     height: "130dp"
+    #adaptive_height: True
 
-    BoxLayout:
-        orientation: "vertical"
-        spacing: "2dp"
 
-        MDTextField:
-                id: task_text
-                hint_text: "Add Task..."
-                # pos_hint: {"center_y": .4}
-                max_text_length: 50
-                on_text_validate: (app.add_task(task_text, date_text.text), app.close_dialog())
+    # MDBoxLayout:
+    #     orientation: "vertical"
+    #     adaptive_height: True
+       
+    MDTextField:
+        id: task_text
+        hint_text: "Add Task..."
+        max_text_length: 50
+        on_text_validate: (app.add_task(task_text, date_text.text), app.close_dialog())
 
-        GridLayout:
-            rows: 2
-            cols: 2
+    MDGridLayout:
+        rows:1
 
-            MDLabel:
-                spacing: '10dp'
-                id: date_text
+        MDLabel:
+            spacing: "10dp"
+            id: date_text
+        
+        MDIconButton:
+            icon: "calendar"
+            on_release: root.show_date_picker()
+            padding: "10dp"
 
-            MDIconButton:
-                icon: 'calendar'
-                on_release: root.show_date_picker()
-                padding: '10dp'
+    
+    MDBoxLayout:
+        orientation: "horizontal"
 
-            MDRectangleFlatButton:
-                text: "[b]SAVE[/b]"
-                on_release: (app.add_task(task_text, date_text.text), app.close_dialog())
-            
-            MDRectangleFlatButton:
-                text: 'CANCEL'
-                on_release: app.close_dialog()
+        MDRectangleFlatButton:
+            text: "[b]SAVE[/b]"
+            on_release: (app.add_task(task_text, date_text.text), app.close_dialog())
+        
+        MDRectangleFlatButton:
+            text: "CANCEL"
+            on_release: app.close_dialog()
