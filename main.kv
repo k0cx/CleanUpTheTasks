@@ -1,82 +1,164 @@
 # #:import MDFabBottomAppBarButton kivymd.uix.toolbar.MDFabBottomAppBarButton
 
-MDFloatLayout:
+MDBoxLayout:
+    orientation: "vertical"
+
     MDTopAppBar:
-        y: root.height - self.height
+        # y: root.height - self.height
         type_height: "small"
+        use_overflow: True
         elevation: 0
-        md_bg_color: 0, 0, 0, 0
         opposite_colors: True
         title: "CUTT"
         left_action_items:  [["menu", lambda x: x]]
         right_action_items: [["dots-vertical", lambda x: x], ["magnify", lambda x: x]]
 
-    ScrollView:
-        pos_hint: {"center_y": .5, "center_x": .5}
-        size_hint: .9, .8
-        bar_width: 10
+    
+    
+    MDBottomNavigation:
+        panel_color: "#ee6002"
+        selected_color_background: "#ff9e22"
+        text_color_active: "lightgrey"
+        # size_hint: 1, .5
 
-        MDList:
-            id: container
-
-    MDBottomAppBar:
-        elevation:0
-
-        MDTopAppBar:
-            icon: "plus-thick"
-            title: "bottom bar"
-            type: "bottom"
-            left_action_items: [["filter", lambda x: x]]
-            mode: "end"
-            on_action_button: app.show_task_dialog()
-            elevation: 0
-            elevation_normal: 0
-            # pos_hint: {"x": .8, "y":.05}
-
-<DialogContent>:
-    orientation: "vertical"
-    spacing: "10dp"
-    size_hint: 1, None
-    height: "150dp"
-
-    MDBoxLayout:
-        orientation: "vertical"
-
-        MDTextField:
-            id: task_text
-            hint_text: "Add Task..."
-            max_text_length: 50
-            on_text_validate: (app.add_task(task_text, date_text.text), app.close_dialog())
-
-        MDBoxLayout:
-            orientation: "horizontal"
-
-            MDLabel:
-                spacing: "10dp"
-                id: date_text
-                halign: "right"
-                valign: "middle"
-            
-            MDIconButton:
-                icon: "calendar"
-                on_release: root.show_date_picker()
-                padding: "10dp"
-        
-        MDBoxLayout:
-            orientation: "horizontal"
-            pos_hint: {"center_y": .5}
+        MDBottomNavigationItem:
+            name: 'tasks_list'
+            text: 'Tasks'
+            icon: 'format-list-text'
+            # badge_icon: "numeric-10"
 
             canvas.before:
                 Color:
                     rgba: 0, 1, 1, 1
                 Rectangle:
                     pos: self.pos
-                    size: self.size 
+                    size: self.size
 
-            MDRectangleFlatButton:
-                text: "[b]SAVE[/b]"
-                on_release: (app.add_task(task_text, date_text.text), app.close_dialog())
+            ScrollView:
+                pos_hint: {"center_y": .5, "center_x": .5}
+                size_hint: .9, .8
+                bar_width: 10
+
+                MDList:
+                    id: container
+
+        MDBottomNavigationItem:
+            name: 'Group_view'
+            text: 'Group view'
+            icon: 'calendar-multiple-check'
+            # badge_icon: "numeric-5"
+
+            MDLabel:
+                text: 'View tasks in groups'
+                halign: 'center'
+
+        MDBottomNavigationItem:
+            name: 'add_task'
+            text: 'Add task'
+            icon: 'plus-thick'
+            on_tab_press: app.add_task_switch()
+
+            MDBoxLayout:
+                orientation: "vertical"
+                padding:"20dp"
+                
+                MDLabel:
+                    text: 'Add task'
+                    halign: 'center'
+                
+                MDTextField:
+                    id: task_text
+                    hint_text: "Add Task..."
+                    max_text_length: 50
+                    on_text_validate: (app.add_task(task_text, date_text.text))
+
+                MDGridLayout:
+                    rows: 1
+
+                    canvas.before:
+                        Color:
+                            rgba: 0, 1, 1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    MDLabel:
+                        # spacing: "10dp"
+                        id: date_text
+                        halign: "right"
+                    
+                    MDIconButton:
+                        icon: "calendar"
+                        on_release: app.show_date_picker()
+                        padding: "10dp"
+
+    # MDBottomAppBar:
+    #     elevation:0
+
+    #     MDTopAppBar:
+    #         icon: "plus-thick"
+    #         title: "bottom bar"
+    #         type: "bottom"
+    #         type_height: "small"
+    #         use_overflow: True
+    #         left_action_items: [["filter", lambda x: x]]
+    #         mode: "free-end"
+    #         on_action_button: app.show_task_dialog()
+    #         elevation: 0
+    #         elevation_normal: 0
+            # pos_hint: {"x": 0, "y":1}
+
+
+# <DialogContent>:
+#     orientation: "vertical"
+#     spacing: "10dp"
+#     size_hint: 1, None
+#     height: "150dp"
+
+#     # MDBoxLayout:
+#     #     orientation: "vertical"
+
+#     MDTextField:
+#         id: task_text
+#         hint_text: "Add Task..."
+#         max_text_length: 50
+#         on_text_validate: (app.add_task(task_text, date_text.text), app.close_dialog())
+
+#     MDGridLayout:
+#         rows: 1
+
+#         canvas.before:
+#             Color:
+#                 rgba: 0, 1, 1, 1
+#             Rectangle:
+#                 pos: self.pos
+#                 size: self.size
+
+#         MDLabel:
+#             # spacing: "10dp"
+#             id: date_text
+#             halign: "right"
+        
+#         MDIconButton:
+#             icon: "calendar"
+#             on_release: app.show_date_picker()
+#             padding: "10dp"
+        
+#         MDBoxLayout:
+#             orientation: "horizontal"
+#             pos_hint: {"center_y": .5}
+
+#             canvas.before:
+#                 Color:
+#                     rgba: 0, 1, 1, 1
+#                 Rectangle:
+#                     pos: self.pos
+#                     size: self.size
+
+#             MDRectangleFlatButton:
+#                 text: "[b]SAVE[/b]"
+#                 on_release: (app.add_task(task_text, date_text.text), app.close_dialog())
             
-            MDRectangleFlatButton:
-                text: "CANCEL"
-                on_release: app.close_dialog()
+#             MDRectangleFlatButton:
+#                 text: "CANCEL"
+#                 on_release: app.close_dialog()

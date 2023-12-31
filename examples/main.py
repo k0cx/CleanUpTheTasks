@@ -65,13 +65,10 @@ class MainApp(MDApp):
     def close_dialog(self, *args):
         self.task_list_dialog.dismiss()
 
-    def add_task_switch(self, **kwargs):
-        self.ids.date_text.text = str(datetime.now().strftime("%Y-%m-%d"))
-
     def build(self, *args):
         # Setting theme
         self.theme_cls.primary_palette = "DeepOrange"
-        self.theme_cls.material_style = "M3"
+        self.theme_cls.material_style = "M2"
 
 
 MainApp().run()
