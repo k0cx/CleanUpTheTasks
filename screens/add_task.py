@@ -29,10 +29,6 @@ from datetime import datetime
 
 
 class AddTask(MDScreen):
-    def date_now_add_task(self, **kwargs):
-        """Set current date on add task screen"""
-        self.root.ids.date_text.text = str(datetime.now().strftime("%Y-%m-%d"))
-
     def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()
@@ -42,4 +38,22 @@ class AddTask(MDScreen):
     def set_task_date(self, instance, value, date_range):
         """This function gets the date from the date picker and converts in a more friendly form then changes the date label on the dialog"""
         date = value.strftime("%Y-%m-%d")
-        self.root.ids.date_text.text = str(date)
+        self.ids.date_text.text = str(date)
+
+    # def add_task(self, task, task_date):
+    #     """Add task to the list of tasks"""
+
+    #     created_task = db.create_task(task.text, task_date)
+    #     self.root.ids["container"].add_widget(
+    #         ListItemWithCheckbox(
+    #             pk=created_task[0],
+    #             text="[b]" + created_task[1] + "[/b]",
+    #             secondary_text=created_task[2],
+    #         )
+    #     )
+
+    def clear_form(self):
+        self.ids.task_text.text = ""
+        self.ids.task_description.text = ""
+        self.ids.date_text.text = "-"
+        self.ids.attachment.text = "attach file:"

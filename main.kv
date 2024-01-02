@@ -22,9 +22,9 @@ MDBoxLayout:
         # size_hint: 1, .5
 
         MDBottomNavigationItem:
-            name: 'tasks_list'
-            text: 'Tasks'
-            icon: 'format-list-text'
+            name: "tasks_list"
+            text: "Tasks"
+            icon: "format-list-text"
             # badge_icon: "numeric-10"
 
             ScrollView:
@@ -36,18 +36,17 @@ MDBoxLayout:
                     id: container
 
         MDBottomNavigationItem:
-            name: 'groups_view'
-            text: 'Groups view'
-            icon: 'calendar-multiple-check'
+            name: "groups_view"
+            text: "Groups view"
+            icon: "calendar-multiple-check"
             # badge_icon: "numeric-5"
 
             GroupsView:
 
         MDBottomNavigationItem:
-            name: 'add_task'
-            text: 'Add task'
-            icon: 'plus-thick'
-            # on_tab_press: app.date_now_add_task()
+            name: "add_task"
+            text: "Add task"
+            icon: "plus-thick"
 
             AddTask:
             

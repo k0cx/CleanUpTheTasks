@@ -1,25 +1,28 @@
 <AddTask@MDBottomNavigationItem>
+
     MDBoxLayout:
         orientation: "vertical"
         padding:"20dp"
         # adaptive_height: True
         size_hint_x: 1
 
-        MDLabel:
-            text: 'Add task'
-            halign: 'center'
+        # MDLabel:
+        #     text: 'Add task'
+        #     halign: 'center'
         
         MDTextField:
             id: task_text
             hint_text: "Task text"
             max_text_length: 50
-            on_text_validate: (app.add_task(task_text, date_text.text))
+            max_length_text_color: "red"
+            required: False
+            # on_text_validate: (root.add_task(task_text, date_text.text))
 
         ScrollView:
-            pos_hint: {"center_y": .5, "center_x": .5}
-            size_hint: .9, .9
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint: .95, .95
             bar_width: 3
-
+            do_scroll: False, True
 
             canvas.before:
                 Color:
@@ -27,16 +30,19 @@
                 Rectangle:
                     pos: self.pos
                     size: self.size
-            
+
             MDTextField:
                 id: task_description
                 hint_text: "Description"
-                max_text_lenght: 500
-                mode: "rectangle"
+                max_text_length: 500
+                # mode: "rectangle"
+                max_length_text_color: "red"
+                helper_text: "500"
                 multiline: True
+                required: False
 
         MDGridLayout:
-            rows: 2
+            rows: 4
             cols: 2
             adaptive_height: True
             width: 1
@@ -45,6 +51,7 @@
                 # spacing: "10dp"
                 id: date_text
                 halign: "right"
+                text: "-"
             
             MDIconButton:
                 icon: "calendar"
@@ -59,6 +66,28 @@
             
             MDIconButton:
                 icon: "attachment"
+                # on_release: app.date_picker()
+                padding: "10dp"
+
+            MDLabel:
+                id: project
+                # spacing: "10dp"
+                halign: "right"
+                text: "project:"
+            
+            MDIconButton:
+                icon: "collage"
+                # on_release: app.date_picker()
+                padding: "10dp"
+
+            MDLabel:
+                id: context
+                # spacing: "10dp"
+                halign: "right"
+                text: "context:"
+            
+            MDIconButton:
+                icon: "contain"
                 # on_release: app.date_picker()
                 padding: "10dp"
 
@@ -79,4 +108,4 @@
                 halign: "right"
                 text: "CANCEL"
                 font_size: "18sp"
-                # on_release: app.close_dialog()
+                on_release: root.clear_form()

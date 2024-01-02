@@ -21,25 +21,17 @@ from kivymd.uix.screen import MDScreen
 
 from datetime import datetime
 
-# from screens.add_task import AddTask
-
-# with open("main.kv", encoding="utf-8") as KV:
-#     Builder.load_string(KV.read())
+from screens.add_task import AddTask
 
 Builder.load_file("screens/groups_view.kv")
 Builder.load_file("screens/add_task.kv")
 
 
 class MainApp(MDApp):
-    # def date_now_add_task(self, **kwargs):
-    #     """Set current date on add task screen"""
-    #     self.root.ids.date_text.text = str(datetime.now().strftime("%Y-%m-%d"))
-
     def build(self, *args):
         # Setting theme
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.material_style = "M3"
-        # return MDScreen()
 
 
 MainApp().run()
