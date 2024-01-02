@@ -24,49 +24,21 @@ from datetime import datetime
 #     Builder.load_string(KV.read())
 
 
-class DialogContent(MDBoxLayout):
-    """OPENS A DIALOG BOX THAT GETS THE TASK FROM THE USER"""
+class MainApp(MDApp):
+    def date_now_add_task(self, **kwargs):
+        """Set current date on add task screen"""
+        self.root.ids.date_text.text = str(datetime.now().strftime("%Y-%m-%d"))
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        # set the date_text label to today's date when user first opens dialog box
-        self.ids.date_text.text = str(datetime.now().strftime("%Y-%m-%d"))
-
-    def show_date_picker(self):
+    def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()
-        date_dialog.bind(on_save=self.on_save)
+        date_dialog.bind(on_save=self.set_task_date)
         date_dialog.open()
 
-    def on_save(self, instance, value, date_range):
-        """This functions gets the date from the date picker and converts its it a
-        more friendly form then changes the date label on the dialog to that"""
-
+    def set_task_date(self, instance, value, date_range):
+        """This function gets the date from the date picker and converts in a more friendly form then changes the date label on the dialog"""
         date = value.strftime("%Y-%m-%d")
-        self.ids.date_text.text = str(date)
-
-
-class MainApp(MDApp):
-    task_list_dialog = None
-
-    def show_task_dialog(self):
-        if not self.task_list_dialog:
-            self.task_list_dialog = MDDialog(
-                title="Create Task",
-                type="custom",
-                content_cls=DialogContent(),
-                buttons=[
-                    MDFlatButton(text="[b]SAVE[/b]", on_release=self.close_dialog),
-                    MDFlatButton(text="CANCEL", on_release=self.close_dialog),
-                ],
-            )
-        self.task_list_dialog.open()
-
-    def close_dialog(self, *args):
-        self.task_list_dialog.dismiss()
-
-    def add_task_switch(self, **kwargs):
-        self.ids.date_text.text = str(datetime.now().strftime("%Y-%m-%d"))
+        self.root.ids.date_text.text = str(date)
 
     def build(self, *args):
         # Setting theme
@@ -74,8 +46,7 @@ class MainApp(MDApp):
         self.theme_cls.material_style = "M3"
 
 
-MainApp().run()
+# MainApp().run()
 
-# if __name__ == "__main__":
-#     app = MainApp()
-#     app.run()
+if __name__ == "__main__":
+    MainApp().run()
