@@ -15,7 +15,7 @@
             hint_text: "Task text"
             max_text_length: 50
             max_length_text_color: "red"
-            required: False
+            required: True
             # on_text_validate: (root.add_task(task_text, date_text.text))
 
         ScrollView:
@@ -51,7 +51,7 @@
                 # spacing: "10dp"
                 id: date_text
                 halign: "right"
-                text: "-"
+                text: "due date:"
             
             MDIconButton:
                 icon: "calendar"
@@ -66,7 +66,7 @@
             
             MDIconButton:
                 icon: "attachment"
-                # on_release: app.date_picker()
+                on_release: root.file_manager_open()
                 padding: "10dp"
 
             MDLabel:

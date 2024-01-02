@@ -3,6 +3,7 @@ from kivy.config import Config
 Config.set("graphics", "resizable", True)
 Config.set("graphics", "width", "350")
 Config.set("graphics", "height", "600")
+Config.set("kivy", "exit_on_escape", "0")
 
 from kivy.lang import Builder
 
