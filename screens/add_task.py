@@ -2,13 +2,45 @@ import os
 from datetime import datetime
 
 from kivy.core.window import Window
+from kivy.metrics import dp
 
 from kivymd.uix.screen import MDScreen
-from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.pickers import MDDatePicker
+from kivymd.uix.filemanager import MDFileManager
+from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.button import MDFlatButton
+
+
+class DescriptionDialog(MDBoxLayout):
+    pass
 
 
 class AddTask(MDScreen):
+    description_dialog = None
+
+    def change_description_dialog(self, instance, value):
+        self.ids.task_description.text = value
+        self.description_dialog.dismiss()
+
+    def show_description_dialog(self):
+        if not self.description_dialog:
+            self.description_dialog = MDDialog(
+                title="Task description",
+                type="custom",
+                content_cls=DescriptionDialog(),
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", on_release=self.description_dialog.dismiss()
+                    ),
+                    MDFlatButton(
+                        text="[b]SAVE[/b]", on_release=self.change_description_dialog
+                    ),
+                ],
+            )
+        self.description_dialog.open()
+
     def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()
@@ -19,6 +51,50 @@ class AddTask(MDScreen):
         """This function gets the date from the date picker and converts in a more friendly form then changes the date label on the dialog"""
         date = value.strftime("%Y-%m-%d")
         self.ids.date_text.text = str(date)
+
+    def project_select(self):
+        menu_items = [
+            {
+                "viewclass": "OneLineListItem",
+                "height": dp(48),
+                "text": f"Item {i}",
+                "on_release": lambda x=f"Item {i}": self.project_set_item(x),
+            }
+            for i in range(5)
+        ]
+        self.menu = MDDropdownMenu(
+            caller=self.ids.project,
+            items=menu_items,
+            position="bottom",
+            width_mult=4,
+        )
+        self.menu.open()
+
+    def project_set_item(self, text_item):
+        self.ids.project.text = text_item
+        self.menu.dismiss()
+
+    def context_select(self):
+        menu_items = [
+            {
+                "viewclass": "OneLineListItem",
+                "height": dp(48),
+                "text": f"Item {i}",
+                "on_release": lambda x=f"Item {i}": self.context_set_item(x),
+            }
+            for i in range(5)
+        ]
+        self.menu = MDDropdownMenu(
+            caller=self.ids.context,
+            items=menu_items,
+            position="bottom",
+            width_mult=4,
+        )
+        self.menu.open()
+
+    def context_set_item(self, text_item):
+        self.ids.context.text = text_item
+        self.menu.dismiss()
 
     def file_manager_open(self):
         Window.bind(on_keyboard=self.events)
@@ -33,14 +109,13 @@ class AddTask(MDScreen):
 
     def select_path(self, path: str):
         """
-        It will be called when you click on the file name
-        or the catalog selection button.
-
-        :param path: path to the selected directory or file;
+        It will be called when you click on the file name.
+        :param path: path to the selected file;
         """
 
         self.exit_manager()
         self.ids.attachment.text = path
+        print(path)
 
     def exit_manager(self, *args):
         """Called when the user reaches the root of the directory tree."""
@@ -71,5 +146,7 @@ class AddTask(MDScreen):
     def clear_form(self):
         self.ids.task_text.text = ""
         self.ids.task_description.text = ""
-        self.ids.date_text.text = "-"
-        self.ids.attachment.text = "attach file:"
+        self.ids.date_text.text = ""
+        self.ids.attachment.text = ""
+        self.ids.project.text = ""
+        self.ids.context.text = ""
