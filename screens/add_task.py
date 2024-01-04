@@ -14,15 +14,13 @@ from kivymd.uix.button import MDFlatButton
 
 
 class DescriptionDialog(MDBoxLayout):
-    pass
+    def __init__(self, default_config=None, **kwargs):
+        super().__init__(**kwargs)
+        self.add_task_class = AddTask()
 
 
 class AddTask(MDScreen):
     description_dialog = None
-
-    def change_description_dialog(self, instance, value):
-        self.ids.task_description.text = value
-        self.description_dialog.dismiss()
 
     def show_description_dialog(self):
         if not self.description_dialog:
@@ -31,15 +29,18 @@ class AddTask(MDScreen):
                 type="custom",
                 content_cls=DescriptionDialog(),
                 buttons=[
-                    MDFlatButton(
-                        text="CANCEL", on_release=self.description_dialog.dismiss()
-                    ),
-                    MDFlatButton(
-                        text="[b]SAVE[/b]", on_release=self.change_description_dialog
-                    ),
+                    MDFlatButton(text="CANCEL"),
+                    MDFlatButton(text="[b]SAVE[/b]"),
                 ],
             )
         self.description_dialog.open()
+
+    def close_description_dialog(self, *args):
+        self.description_dialog.dismiss()
+
+    def save_description_dialog(self, instance, value):
+        # self.ids.task_description_text.text = value
+        self.description_dialog.dismiss()
 
     def date_picker(self):
         """Opens the date picker"""
@@ -48,7 +49,9 @@ class AddTask(MDScreen):
         date_dialog.open()
 
     def set_task_date(self, instance, value, date_range):
-        """This function gets the date from the date picker and converts in a more friendly form then changes the date label on the dialog"""
+        """This function gets the date from the date picker
+        and converts in a more friendly form
+        then changes the date label on the dialog"""
         date = value.strftime("%Y-%m-%d")
         self.ids.date_text.text = str(date)
 

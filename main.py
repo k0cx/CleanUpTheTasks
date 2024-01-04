@@ -22,7 +22,7 @@ from kivymd.uix.screen import MDScreen
 
 from datetime import datetime
 
-from screens.add_task import AddTask
+from screens.add_task import AddTask, DescriptionDialog
 
 Builder.load_file("screens/groups_view.kv")
 Builder.load_file("screens/add_task.kv")
@@ -35,7 +35,7 @@ class MainApp(MDApp):
         self.theme_cls.material_style = "M3"
 
 
-MainApp().run()
+# MainApp().run()
 
-# if __name__ == "__main__":
-#     MainApp().run()
+if __name__ == "__main__":
+    MainApp().run()
