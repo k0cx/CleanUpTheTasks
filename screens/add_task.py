@@ -13,6 +13,8 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
+from database import Database
+
 
 class DescriptionDialog(MDBoxLayout):
     def __init__(self, default_config=None, **kwargs):
