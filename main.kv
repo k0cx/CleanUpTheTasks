@@ -1,122 +1,79 @@
-# #:import MDFabBottomAppBarButton kivymd.uix.toolbar.MDFabBottomAppBarButton
+MDScreenManager:
 
-MDBoxLayout:
-    orientation: "vertical"
-
-    MDTopAppBar:
-        # y: root.height - self.height
-        type_height: "small"
-        use_overflow: True
-        elevation: 0
-        opposite_colors: True
-        title: "CUTT"
-        left_action_items:  [["menu", lambda x: x]]
-        right_action_items: [["dots-vertical", lambda x: x], ["magnify", lambda x: x]]
-
-    
-    
-    MDBottomNavigation:
-        panel_color: "#ee6002"
-        selected_color_background: 1, 1, 1, .2
-        text_color_active: "lightgrey"
-        # size_hint: 1, .5
-
-        MDBottomNavigationItem:
-            name: "add_task"
-            text: "Add task"
-            icon: "plus-thick"
-
-            AddTask:
-
-        MDBottomNavigationItem:
-            name: "tasks_list"
-            text: "Tasks"
-            icon: "format-list-text"
-            # badge_icon: "numeric-10"
-
-            ScrollView:
-                pos_hint: {"center_y": .5, "center_x": .5}
-                size_hint: .9, .8
-                bar_width: 10
-
-                MDList:
-                    id: container
-
-        MDBottomNavigationItem:
-            name: "groups_view"
-            text: "Groups view"
-            icon: "calendar-multiple-check"
-            # badge_icon: "numeric-5"
-
-            GroupsView:    
-
-    # MDBottomAppBar:
-    #     elevation:0
-
-    #     MDTopAppBar:
-    #         icon: "plus-thick"
-    #         title: "bottom bar"
-    #         type: "bottom"
-    #         type_height: "small"
-    #         use_overflow: True
-    #         left_action_items: [["filter", lambda x: x]]
-    #         mode: "free-end"
-    #         on_action_button: app.show_task_dialog()
-    #         elevation: 0
-    #         elevation_normal: 0
-            # pos_hint: {"x": 0, "y":1}
-
-
-# <DialogContent>:
-#     orientation: "vertical"
-#     spacing: "10dp"
-#     size_hint: 1, None
-#     height: "150dp"
-
-#     # MDBoxLayout:
-#     #     orientation: "vertical"
-
-#     MDTextField:
-#         id: task_text
-#         hint_text: "Add Task..."
-#         max_text_length: 50
-#         on_text_validate: (app.add_task(task_text, date_text.text), app.close_dialog())
-
-#     MDGridLayout:
-#         rows: 1
-
-#         canvas.before:
-#             Color:
-#                 rgba: 0, 1, 1, 1
-#             Rectangle:
-#                 pos: self.pos
-#                 size: self.size
-
-#         MDLabel:
-#             # spacing: "10dp"
-#             id: date_text
-#             halign: "right"
+    MDScreen:
+        name: "start screen"
+        md_bg_color: "lightblue"
         
-#         MDIconButton:
-#             icon: "calendar"
-#             on_release: app.show_date_picker()
-#             padding: "10dp"
-        
-#         MDBoxLayout:
-#             orientation: "horizontal"
-#             pos_hint: {"center_y": .5}
+        MDBoxLayout:
+            orientation: "vertical"
 
-#             canvas.before:
-#                 Color:
-#                     rgba: 0, 1, 1, 1
-#                 Rectangle:
-#                     pos: self.pos
-#                     size: self.size
-
-#             MDRectangleFlatButton:
-#                 text: "[b]SAVE[/b]"
-#                 on_release: (app.add_task(task_text, date_text.text), app.close_dialog())
+            MDTopAppBar:
+                # y: root.height - self.height
+                type_height: "small"
+                use_overflow: True
+                elevation: 0
+                opposite_colors: True
+                title: "CUTT"
+                left_action_items:  [["menu", lambda x: x]]
+                right_action_items: [["dots-vertical", lambda x: x], ["magnify", lambda x: x]]
             
-#             MDRectangleFlatButton:
-#                 text: "CANCEL"
-#                 on_release: app.close_dialog()
+            MDBottomNavigation:
+                id: bottom_nav_bar
+                panel_color: "#ee6002"
+                selected_color_background: 1, 1, 1, .2
+                text_color_active: "lightgrey"
+                # size_hint: 1, .5
+
+                MDBottomNavigationItem:
+                    name: "tasks_list"
+                    text: "Tasks"
+                    icon: "format-list-text"
+                    # badge_icon: "numeric-10"
+                    on_tab_release: root.current = "start screen"
+
+                    ScrollView:
+                        pos_hint: {"center_y": .5, "center_x": .5}
+                        size_hint: .9, .8
+                        bar_width: 5
+                        do_scroll_x: False
+
+                        MDList:
+                            id: container
+
+                MDBottomNavigationItem:
+                    name: "groups_view"
+                    text: "Groups view"
+                    icon: "calendar-multiple-check"
+                    # badge_icon: "numeric-5"
+
+                    GroupsView:
+
+                MDBottomNavigationItem:
+                    name: "add_task"
+                    text: "Add task"
+                    icon: "plus-thick"
+                    on_tab_release:
+                        root.transition.direction = "left"
+                        root.current = "add task screen"
+
+    MDScreen:
+        name: "add task screen"
+        # transition: FadeTransition()
+        
+        AddTask:
+
+<ListItemWithCheckbox>:
+    id: the_list_item
+    markup: True
+
+    LeftCheckbox:
+        id: check
+        on_release: 
+            root.mark(check, the_list_item)
+
+    IconRightWidget:
+        icon: 'trash-can-outline'
+        theme_text_color: "Custom"
+        text_color: 1, 0, 0, 1
+        on_release:
+            root.delete_item(the_list_item)

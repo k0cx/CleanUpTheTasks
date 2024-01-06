@@ -2,15 +2,16 @@ import os
 from datetime import datetime
 
 from kivy.core.window import Window
-from kivy.metrics import dp
+from kivy.metrics import dp  # TODO: to be removed when dropdown items ready
 
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.pickers import MDDatePicker
-from kivymd.uix.filemanager import MDFileManager
-from kivymd.uix.menu import MDDropdownMenu
-from kivymd.uix.dialog import MDDialog
+from kivymd.toast.kivytoast.kivytoast import toast
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.filemanager import MDFileManager
+from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.pickers import MDDatePicker
+from kivymd.uix.screen import MDScreen
 
 
 class DescriptionDialog(MDBoxLayout):
@@ -20,28 +21,6 @@ class DescriptionDialog(MDBoxLayout):
 
 
 class AddTask(MDScreen):
-    description_dialog = None
-
-    def show_description_dialog(self):
-        if not self.description_dialog:
-            self.description_dialog = MDDialog(
-                title="Task description",
-                type="custom",
-                content_cls=DescriptionDialog(),
-                buttons=[
-                    MDFlatButton(text="CANCEL"),
-                    MDFlatButton(text="[b]SAVE[/b]"),
-                ],
-            )
-        self.description_dialog.open()
-
-    def close_description_dialog(self, *args):
-        self.description_dialog.dismiss()
-
-    def save_description_dialog(self, instance, value):
-        # self.ids.task_description_text.text = value
-        self.description_dialog.dismiss()
-
     def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()
@@ -118,7 +97,6 @@ class AddTask(MDScreen):
 
         self.exit_manager()
         self.ids.attachment.text = path
-        print(path)
 
     def exit_manager(self, *args):
         """Called when the user reaches the root of the directory tree."""
@@ -134,19 +112,20 @@ class AddTask(MDScreen):
                 self.file_manager.back()
         return True
 
-    # def add_task(self, task, task_date):
-    #     """Add task to the list of tasks"""
+    def add_task(self, task, task_date):
+        """Add task to the list of tasks"""
 
-    #     created_task = db.create_task(task.text, task_date)
-    #     self.root.ids["container"].add_widget(
-    #         ListItemWithCheckbox(
-    #             pk=created_task[0],
-    #             text="[b]" + created_task[1] + "[/b]",
-    #             secondary_text=created_task[2],
-    #         )
-    #     )
+        # TODO: use snackbar when task added
+        created_task = db.create_task(task.text, task_date)
+        self.root.ids["container"].add_widget(
+            ListItemWithCheckbox(
+                pk=created_task[0],
+                text="[b]" + created_task[1] + "[/b]",
+                secondary_text=created_task[2],
+            )
+        )
 
-    def clear_form(self):
+    def clear_form(self, *args):
         self.ids.task_text.text = ""
         self.ids.task_description.text = ""
         self.ids.date_text.text = ""
