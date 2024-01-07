@@ -13,16 +13,14 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.screen import MDScreen
 
-from database import Database
+# TODO make right import
+from assets.database import Database
+
+# Initialize db instance
+db = Database()
 
 
-class DescriptionDialog(MDBoxLayout):
-    def __init__(self, default_config=None, **kwargs):
-        super().__init__(**kwargs)
-        self.add_task_class = AddTask()
-
-
-class AddTask(MDScreen):
+class TaskScreen(MDScreen):
     def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()
@@ -119,13 +117,13 @@ class AddTask(MDScreen):
 
         # TODO: use snackbar when task added
         created_task = db.create_task(task.text, task_date)
-        self.root.ids["container"].add_widget(
-            ListItemWithCheckbox(
-                pk=created_task[0],
-                text="[b]" + created_task[1] + "[/b]",
-                secondary_text=created_task[2],
-            )
-        )
+        # self.ids.container.add_widget(
+        #     ListItemWithCheckbox(
+        #         pk=created_task[0],
+        #         text="[b]" + created_task[1] + "[/b]",
+        #         secondary_text=created_task[2],
+        #     )
+        # )
 
     def clear_form(self, *args):
         self.ids.task_text.text = ""

@@ -13,15 +13,14 @@ from kivymd.uix.selectioncontrol import MDCheckbox
 
 from datetime import datetime
 
-from screens.add_task import AddTask, DescriptionDialog
-
-from database import Database
+from assets.task_screen import TaskScreen
+from assets.database import Database
 
 # Initialize db instance
 db = Database()
 
-Builder.load_file("screens/groups_view.kv")
-Builder.load_file("screens/add_task.kv")
+Builder.load_file("assets/groups_view.kv")
+Builder.load_file("assets/task_screen.kv")
 
 
 class ListItemWithCheckbox(TwoLineAvatarIconListItem):

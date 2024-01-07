@@ -1,4 +1,4 @@
-<AddTask@Screen>:
+<TaskScreen@MDScreen>:
     
     MDBoxLayout:
         orientation: "vertical"
@@ -98,7 +98,13 @@
                 text: "[b]SAVE[/b]"
                 font_size: "18sp"
                 spacing: "30dp", 0, "10dp", 0
-                on_release: root.add_task(task_text, date_text.text)
+                on_release: 
+                    root.add_task(task_text, date_text.text)
+                    # app.on_start()
+                    root.clear_form()
+                    app.root.transition.direction = "right"
+                    app.root.current = "start screen"
+                    app.root.ids.bottom_nav_bar.switch_tab("tasks_list")
                             
             MDFlatButton:
                 halign: "right"
