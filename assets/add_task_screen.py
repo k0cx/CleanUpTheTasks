@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 from kivy.core.window import Window
+from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.metrics import dp  # TODO: to be removed when dropdown items ready
 
@@ -13,13 +14,19 @@ from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
 
+# from kivymd.uix.screen import MDScreen
+
+
 from assets.database import Database
 
 # Initialize db instance
-db = Database()
+# db = Database()
+
+Builder.load_file("assets/add_task_screen.kv")
+Builder.load_file("assets/edit_task_screen.kv")
 
 
-class TaskScreen(Screen):
+class AddTaskScreen(Screen):
     def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()
