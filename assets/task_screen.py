@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 
 from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
 from kivy.metrics import dp  # TODO: to be removed when dropdown items ready
 
 from kivymd.toast.kivytoast.kivytoast import toast
@@ -11,16 +12,14 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
-from kivymd.uix.screen import MDScreen
 
-# TODO make right import
 from assets.database import Database
 
 # Initialize db instance
 db = Database()
 
 
-class TaskScreen(MDScreen):
+class TaskScreen(Screen):
     def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()
@@ -112,18 +111,15 @@ class TaskScreen(MDScreen):
                 self.file_manager.back()
         return True
 
-    def add_task(self, task, task_date):
-        """Add task to the list of tasks"""
+    def write_task(self, task, task_date):
+        """Add task to db"""
 
-        # TODO: use snackbar when task added
-        created_task = db.create_task(task.text, task_date)
-        # self.ids.container.add_widget(
-        #     ListItemWithCheckbox(
-        #         pk=created_task[0],
-        #         text="[b]" + created_task[1] + "[/b]",
-        #         secondary_text=created_task[2],
-        #     )
-        # )
+        db.create_task(task.text, task_date)
+        toast(text="Task added", duration=2)
+
+    def edit_task(self):
+        # TODO: add func for getting from db data
+        pass
 
     def clear_form(self, *args):
         self.ids.task_text.text = ""

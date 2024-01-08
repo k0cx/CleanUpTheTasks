@@ -1,4 +1,4 @@
-<TaskScreen@MDScreen>:
+<TaskScreen@Screen>:
     
     MDBoxLayout:
         orientation: "vertical"
@@ -53,6 +53,7 @@
 
             MDTextField:
                 id: project
+                text: "Not finish this functionality yet..."
                 icon_left: "collage"
                 icon_left_color_normal: 0, 0, 0, 1
                 halign: "right"
@@ -66,6 +67,7 @@
             MDTextField:
                 id: context
                 icon_left: "contain"
+                text: "Not finish this functionality yet..."
                 icon_left_color_normal: 0, 0, 0, 1
                 halign: "right"
                 hint_text: "context"
@@ -78,6 +80,7 @@
             MDTextField:
                 id: attachment
                 icon_left: "attachment"
+                text: "Not finish this functionality yet..."
                 icon_left_color_normal: 0, 0, 0, 1
                 halign: "right"
                 hint_text: "attachment"
@@ -99,8 +102,9 @@
                 font_size: "18sp"
                 spacing: "30dp", 0, "10dp", 0
                 on_release: 
-                    root.add_task(task_text, date_text.text)
-                    # app.on_start()
+                    root.write_task(task_text, date_text.text)
+                    app.root.ids.container.clear_widgets()
+                    app.on_start()
                     root.clear_form()
                     app.root.transition.direction = "right"
                     app.root.current = "start screen"
@@ -115,3 +119,13 @@
                     app.root.current = "start screen"
                     app.root.ids.bottom_nav_bar.switch_tab("tasks_list")
                     root.clear_form()
+            
+            MDLabel:
+                # spacer
+            MDIconButton:
+                icon: 'trash-can-outline'
+                theme_text_color: "Custom"
+                text_color: 1, 0, 0, 1
+                # TODO: confirmation dialog
+                # on_release:
+                #     root.delete_item(the_list_item)

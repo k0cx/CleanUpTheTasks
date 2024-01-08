@@ -41,6 +41,12 @@ class Database:
         # return the tasks to be added to the list when the application starts
         return completed_tasks, uncomplete_tasks
 
+    def get_task_data(self, taskid):
+        task_data = self.cursor.execute(
+            "SELECT id, completed, task, due_date FROM tasks WHERE id = ?", (taskid,)
+        ).fetchone()
+        return task_data
+
     def mark_task_as_complete(self, taskid):
         """Mark tasks as complete"""
         self.cursor.execute("UPDATE tasks SET completed=1 WHERE id=?", (taskid,))

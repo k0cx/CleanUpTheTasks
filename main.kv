@@ -1,8 +1,9 @@
 MDScreenManager:
+    id: screen_manager
 
-    MDScreen:
+    Screen:
         name: "start screen"
-        md_bg_color: "lightblue"
+        # md_bg_color: "lightblue"
         
         MDBoxLayout:
             orientation: "vertical"
@@ -54,17 +55,25 @@ MDScreenManager:
                     icon: "plus-thick"
                     on_tab_release:
                         root.transition.direction = "left"
-                        root.current = "add task screen"
+                        root.current = "task screen"
 
-    MDScreen:
-        name: "add task screen"
+    Screen:
+        name: "task screen"
         # transition: FadeTransition()
         
         TaskScreen:
 
+    Screen:
+        name: "edit task screen"
+        EditTaskScreen:
+
 <ListItemWithCheckbox>:
     id: the_list_item
     markup: True
+    on_release: 
+        root.edit_task(the_list_item)
+        app.root.transition.direction = "left"
+        app.root.current = "edit task screen"
 
     LeftCheckbox:
         id: check
