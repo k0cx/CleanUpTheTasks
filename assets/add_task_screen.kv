@@ -118,8 +118,9 @@
                 font_size: "18sp"
                 on_release:
                     app.root.transition.direction = "right"
-                    app.root.current = "start screen"
-                    app.root.ids.bottom_nav_bar.switch_tab("tasks_list")
+                    app.root.current = "task list screen"
+                    # app.root.ids.bottom_nav_bar.switch_tab("tasks_list")
+                    # app.root.ids.bottom_nav_bar.current = "tasks_list"
                     root.clear_form()
             
             MDLabel:

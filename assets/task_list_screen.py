@@ -28,8 +28,8 @@ db = Database()
 
 Builder.load_file("assets/task_list_screen.kv")
 Builder.load_file("assets/groups_view.kv")
-Builder.load_file("assets/add_task_screen.kv")
-Builder.load_file("assets/edit_task_screen.kv")
+# Builder.load_file("assets/add_task_screen.kv")
+# Builder.load_file("assets/edit_task_screen.kv")
 
 
 class GroupsView(MDBoxLayout):
@@ -80,6 +80,9 @@ class LeftCheckbox(ILeftBodyTouch, MDCheckbox):
 
 
 class TaskListScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def on_start(self):
         """Load the saved tasks and add them to the MDList widget when the application starts"""
 
