@@ -43,6 +43,7 @@ class MainApp(MDApp):
 
     def on_start(self):
         """Load the saved tasks and add them to the MDList widget when the application starts"""
+        print(self.root)
 
         try:
             completed_tasks, uncomplete_tasks = db.get_tasks()
