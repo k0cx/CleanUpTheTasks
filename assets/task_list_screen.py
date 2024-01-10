@@ -7,7 +7,7 @@ Config.set("kivy", "exit_on_escape", "0")
 
 from kivy.lang import Builder
 from kivy.properties import StringProperty
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 # from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -20,8 +20,8 @@ from kivymd.uix.textfield import MDTextField
 
 from datetime import datetime
 
-from .add_task_screen import AddTaskScreen
-from .database import Database
+from assets.add_task_screen import AddTaskScreen
+from assets.database import Database
 
 # Initialize db instance
 db = Database()
@@ -36,8 +36,16 @@ class GroupsView(MDBoxLayout):
     pass
 
 
-class EditTaskScreen(Screen):
-    pass
+# class EditTaskScreen(Screen):
+#     pass
+
+
+class TaskListScreen(Screen):
+    def __init__(self, pk=None, **kwargs):
+        super().__init__(**kwargs)
+
+    # def on_enter(self):
+    #     self.ids.bottom_nav_bar.switch_tab("tasks_list")
 
 
 class ListItemWithCheckbox(TwoLineAvatarIconListItem):
@@ -77,38 +85,3 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
 
 class LeftCheckbox(ILeftBodyTouch, MDCheckbox):
     """Custom left container"""
-
-
-class TaskListScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def on_start(self):
-        """Load the saved tasks and add them to the MDList widget when the application starts"""
-
-        self.add_widget(MDLabel(text="name_theme", halign="center"))
-
-        try:
-            completed_tasks, uncomplete_tasks = db.get_tasks()
-
-            if uncomplete_tasks != []:
-                for task in uncomplete_tasks:
-                    add_task = ListItemWithCheckbox(
-                        pk=task[0],
-                        text=task[1],
-                        secondary_text=task[2],
-                    )
-                    self.root.ids.container.add_widget(add_task)
-
-            if completed_tasks != []:
-                for task in completed_tasks:
-                    add_task = ListItemWithCheckbox(
-                        pk=task[0],
-                        text="[s]" + task[1] + "[/s]",
-                        secondary_text=task[2],
-                    )
-                    add_task.ids.check.active = True
-                    self.root.ids.container.add_widget(add_task)
-        except Exception as e:
-            print(e)
-            pass
