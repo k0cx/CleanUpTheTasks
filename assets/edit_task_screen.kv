@@ -6,6 +6,11 @@
         padding:"10dp"
         # adaptive_height: True
         # size_hint_x: 1
+
+        MDFlatButton:
+            text: "SET1"
+            on_release: root.set_text()
+
         MDLabel:
             md_bg_color: "lightblue"
             text: "task edit screen"
@@ -16,7 +21,7 @@
 
         MDTextField:
             id: edit_task_text
-            # text: root.task_text
+            text: ""
             max_text_length: 50
             max_length_text_color: "red"
             required: True

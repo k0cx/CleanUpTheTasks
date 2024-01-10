@@ -1,7 +1,4 @@
-<AddTaskScreen>:
-    name: "add task screen"
-    # transition: FadeTransition()
-    
+<AddTaskView>:
     MDBoxLayout:
         orientation: "vertical"
         padding:"10dp"
@@ -119,8 +116,8 @@
                 on_release:
                     root.clear_form()
                     app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
-                    app.root.transition.direction = "right"
-                    app.root.current = "task list screen"
+                    # app.root.transition.direction = "right"
+                    # app.root.current = "task list screen"
             
             MDLabel:
                 # spacer

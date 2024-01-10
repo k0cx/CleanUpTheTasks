@@ -22,15 +22,11 @@ from assets.database import Database
 # Initialize db instance
 db = Database()
 
-Builder.load_file("assets/add_task_screen.kv")
-Builder.load_file("assets/edit_task_screen.kv")
+Builder.load_file("assets/add_task_view.kv")
+# Builder.load_file("assets/edit_task_screen.kv")
 
 
-class EditTaskScreen(Screen):
-    pass
-
-
-class AddTaskScreen(Screen):
+class AddTaskView(MDBoxLayout):
     def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()
@@ -127,10 +123,6 @@ class AddTaskScreen(Screen):
 
         db.create_task(task.text, task_date)
         toast(text="Task added", duration=2)
-
-    def edit_task(self):
-        # TODO: add func for getting from db data
-        pass
 
     def clear_form(self, *args):
         self.ids.task_text.text = ""

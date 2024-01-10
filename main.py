@@ -21,8 +21,8 @@ from kivymd.app import MDApp
 
 # from datetime import datetime
 
-from assets.task_list_screen import TaskListScreen, ListItemWithCheckbox
-from assets.add_task_screen import AddTaskScreen, EditTaskScreen
+from assets.main_screen import MainScreen, ListItemWithCheckbox
+from assets.add_task_view import AddTaskView
 
 from assets.database import Database
 
@@ -55,9 +55,7 @@ class MainApp(MDApp):
                         secondary_text=task[2],
                     )
                     # self.root.ids.container.add_widget(add_task)
-                    self.root.get_screen(
-                        name="task list screen"
-                    ).ids.container.add_widget(add_task)
+                    self.root.current_screen.ids.container.add_widget(add_task)
 
             if completed_tasks != []:
                 for task in completed_tasks:
@@ -67,10 +65,10 @@ class MainApp(MDApp):
                         secondary_text=task[2],
                     )
                     add_task.ids.check.active = True
-                    # self.root.ids.container.add_widget(add_task)
-                    self.root.get_screen(
-                        name="task list screen"
-                    ).ids.container.add_widget(add_task)
+                    self.root.current_screen.ids.container.add_widget(add_task)
+                    # self.root.get_screen(
+                    #     name="task list screen"
+                    # ).ids.container.add_widget(add_task)
         except Exception as e:
             print(e)
             pass

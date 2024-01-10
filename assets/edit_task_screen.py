@@ -23,15 +23,22 @@ from assets.database import Database
 # Initialize db instance
 db = Database()
 
-# Builder.load_file("assets/add_task_screen.kv")
 Builder.load_file("assets/edit_task_screen.kv")
 
 
 class EditTaskScreen(Screen):
-    task_text = StringProperty()
+    def set_text(self):
+        self.ids.edit_task_text.text = "ttt"
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.task_text = "text N"
+    def date_picker(self):
+        """Opens the date picker"""
+        date_dialog = MDDatePicker()
+        date_dialog.bind(on_save=self.set_task_date)
+        date_dialog.open()
 
-    # ScreenManager().get_screen(name="edit task screen").task_text = "task_data[2]"
+    def set_task_date(self, instance, value, date_range):
+        """This function gets the date from the date picker
+        and converts in a more friendly form
+        then changes the date label on the dialog"""
+        date = value.strftime("%Y-%m-%d")
+        self.ids.date_text.text = str(date)
