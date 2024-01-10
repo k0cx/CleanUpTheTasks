@@ -66,10 +66,10 @@
 <ListItemWithCheckbox>:
     id: the_list_item
     markup: True
-    on_release: 
-        root.edit_task(the_list_item)
+    on_release:
         app.root.transition.direction = "left"
         app.root.current = "edit task screen"
+        # root.edit_task(the_list_item)
 
     LeftCheckbox:
         id: check

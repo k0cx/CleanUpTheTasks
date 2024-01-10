@@ -16,7 +16,7 @@
 
         MDTextField:
             id: edit_task_text
-            hint_text: "Task text"
+            # text: root.task_text
             max_text_length: 50
             max_length_text_color: "red"
             required: True
@@ -53,22 +53,22 @@
                 spacing: "30dp", 0, "10dp", 0
                 on_release: 
                     # root.write_task(task_text, date_text.text)
-                    app.root.ids.container.clear_widgets()
+                    app.root.get_screen(name="task list screen").ids.container.clear_widgets()
                     app.on_start()
                     # root.clear_form()
+                    app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
                     app.root.transition.direction = "right"
-                    app.root.current = "start screen"
-                    app.root.ids.bottom_nav_bar.switch_tab("tasks_list")
+                    app.root.current = "task list screen"
                             
             MDFlatButton:
                 halign: "right"
                 text: "CANCEL"
                 font_size: "18sp"
                 on_release:
-                    app.root.transition.direction = "right"
-                    app.root.current = "start screen"
-                    app.root.ids.bottom_nav_bar.switch_tab("tasks_list")
                     # root.clear_form()
+                    app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
+                    app.root.transition.direction = "right"
+                    app.root.current = "task list screen"
             
             MDLabel:
                 # spacer

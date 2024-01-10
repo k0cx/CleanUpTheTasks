@@ -26,6 +26,10 @@ Builder.load_file("assets/add_task_screen.kv")
 Builder.load_file("assets/edit_task_screen.kv")
 
 
+class EditTaskScreen(Screen):
+    pass
+
+
 class AddTaskScreen(Screen):
     def date_picker(self):
         """Opens the date picker"""

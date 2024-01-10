@@ -108,19 +108,19 @@
                     app.root.get_screen(name="task list screen").ids.container.clear_widgets()
                     app.on_start()
                     root.clear_form()
+                    app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
                     app.root.transition.direction = "right"
                     app.root.current = "task list screen"
-                    app.root.current_screen.ids.bottom_nav_bar.switch_tab("tasks_list")
                             
             MDFlatButton:
                 halign: "right"
                 text: "CANCEL"
                 font_size: "18sp"
                 on_release:
+                    root.clear_form()
+                    app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
                     app.root.transition.direction = "right"
                     app.root.current = "task list screen"
-                    app.root.current_screen.ids.bottom_nav_bar.switch_tab("tasks_list")
-                    root.clear_form()
             
             MDLabel:
                 # spacer
