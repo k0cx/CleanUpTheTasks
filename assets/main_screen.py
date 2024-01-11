@@ -61,9 +61,9 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
     def edit_task(self, the_list_item):
         task_data = db.get_task_data(the_list_item.pk)
         print(task_data)
-        # self.parent.parent.ids.task_text.text = task_data[2]
-        # ScreenManager().current_screen.ids.task_text.text = task_data[2]
-        return task_data
+        # self.parent.ids.task_text.text = task_data[2]
+        # ScreenManager().current.ids.task_text.text = task_data[2]
+        print(self.ids)
 
 
 class LeftCheckbox(ILeftBodyTouch, MDCheckbox):
