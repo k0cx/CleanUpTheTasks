@@ -2,10 +2,19 @@
 
     MDBoxLayout:
         orientation: "vertical"
-        padding:"10dp"
+        # padding:"10dp"
         # adaptive_height: True
         # size_hint_x: 1
         id: edit_container
+
+        MDTopAppBar:
+            # y: root.height - self.height
+            type_height: "small"
+            use_overflow: True
+            elevation: 0
+            opposite_colors: True
+            title: "Edit task"
+            left_action_items: [["arrow-left", lambda x : root.back_action()]]
 
         MDTextField:
             id: task_text
@@ -106,20 +115,14 @@
                     root.write_task(task_text, date_text.text)
                     app.root.get_screen(name="task list screen").ids.container.clear_widgets()
                     app.on_start()
-                    root.clear_form()
-                    app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
-                    app.root.transition.direction = "right"
-                    app.root.current = "task list screen"
+                    root.back_action()
 
             MDFlatButton:
                 halign: "right"
                 text: "CANCEL"
                 font_size: "18sp"
                 on_release:
-                    root.clear_form()
-                    app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
-                    app.root.transition.direction = "right"
-                    app.root.current = "task list screen"
+                    root.back_action()
 
             MDLabel:
                 # spacer

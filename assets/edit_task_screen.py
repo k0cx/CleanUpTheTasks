@@ -4,9 +4,10 @@ from datetime import datetime
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.properties import StringProperty
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.metrics import dp  # TODO: to be removed when dropdown items ready
 
+from kivymd.app import MDApp
 from kivymd.toast.kivytoast.kivytoast import toast
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFlatButton
@@ -22,8 +23,6 @@ from assets.database import Database
 
 # Initialize db instance
 db = Database()
-
-# Builder.load_file("assets/edit_task_screen.kv")
 
 
 class EditTaskScreen(Screen):
@@ -124,7 +123,13 @@ class EditTaskScreen(Screen):
         db.create_task(task.text, task_date)
         toast(text="Task added", duration=2)
 
-    def clear_form(self, *args):
+    def back_action(self):
+        sm = MDApp.get_running_app().root
+        sm.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab(
+            "tasks_list"
+        )
+        sm.transition = SlideTransition(direction="right")
+        sm.current = "task list screen"
         self.ids.task_text.text = ""
         self.ids.task_description.text = ""
         self.ids.date_text.text = ""
