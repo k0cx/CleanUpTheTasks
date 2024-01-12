@@ -1,4 +1,4 @@
-<MainScreen@RootScreenManager>:
+<TaskListScreen>:
     name: "task list screen"
 
     MDBoxLayout:
@@ -17,16 +17,16 @@
         MDBottomNavigation:
             id: bottom_nav_bar
             panel_color: "#ee6002"
-            selected_color_background: 1, 1, 1, .7
-            use_text: False
-            # text_color_active: "lightgrey"
+            selected_color_background: 1, 1, 1, .2
+            text_color_active: "lightgrey"
             # size_hint: 1, .5
 
             MDBottomNavigationItem:
                 name: "tasks_list"
+                text: "Tasks"
                 icon: "format-list-text"
                 # badge_icon: "numeric-10"
-                # on_tab_release: app.root.current = "task list screen"
+                on_tab_release: app.root.current = "task list screen"
 
                 ScrollView:
                     pos_hint: {"center_y": .5, "center_x": .5}
@@ -39,28 +39,37 @@
 
             MDBottomNavigationItem:
                 name: "groups_view"
-                icon: "collage"
+                text: "Groups view"
+                icon: "calendar-multiple-check"
                 # badge_icon: "numeric-5"
 
                 GroupsView:
 
             MDBottomNavigationItem:
                 name: "add_task"
-                icon: "pencil"
+                text: "Add task"
+                icon: "plus-thick"
+                on_tab_release:
+                    app.root.transition.direction = "left"
+                    app.root.current = "add task screen"
 
-                AddTaskView:
-                    id: add_task_v
+# <AddTaskScreen>:
+#     name: "add task screen"
+#     transition: FadeTransition()
+    
+#     AddTaskScreen:
 
+# <EditTaskScreen>:
+#     name: "edit task screen"
+#     EditTaskScreen:
 
 <ListItemWithCheckbox>:
     id: the_list_item
     markup: True
     on_release:
-        # app.root.transition.direction = "left"
-        # app.root.current = "edit task screen"
-        app.root.current_screen.ids.bottom_nav_bar.switch_tab("add_task")
-        root.edit_task(the_list_item)
-        # app.root.ids.add_task_view.ids.task_text.text = "text1"
+        app.root.transition.direction = "left"
+        app.root.current = "edit task screen"
+        # root.edit_task(the_list_item)
 
     LeftCheckbox:
         id: check

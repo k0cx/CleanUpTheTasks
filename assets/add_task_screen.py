@@ -16,17 +16,21 @@ from kivymd.uix.pickers import MDDatePicker
 
 # from kivymd.uix.screen import MDScreen
 
-# from .main_screen import ListItemWithCheckbox
+
 from assets.database import Database
 
 # Initialize db instance
 db = Database()
 
-# Builder.load_file("assets/add_task_view.kv")
+Builder.load_file("assets/add_task_screen.kv")
 # Builder.load_file("assets/edit_task_screen.kv")
 
 
-class AddTaskView(MDBoxLayout):
+# class EditTaskScreen(Screen):
+#     pass
+
+
+class AddTaskScreen(Screen):
     def date_picker(self):
         """Opens the date picker"""
         date_dialog = MDDatePicker()

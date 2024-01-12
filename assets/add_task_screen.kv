@@ -1,4 +1,7 @@
-<AddTaskView@MDBottomNavigationItem>:
+<AddTaskScreen>:
+    name: "add task screen"
+    # transition: FadeTransition()
+    
     MDBoxLayout:
         orientation: "vertical"
         padding:"10dp"
@@ -7,7 +10,6 @@
         
         MDTextField:
             id: task_text
-            text: ""
             hint_text: "Task text"
             max_text_length: 50
             max_length_text_color: "red"
@@ -117,8 +119,8 @@
                 on_release:
                     root.clear_form()
                     app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
-                    # app.root.transition.direction = "right"
-                    # app.root.current = "task list screen"
+                    app.root.transition.direction = "right"
+                    app.root.current = "task list screen"
             
             MDLabel:
                 # spacer

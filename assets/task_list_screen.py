@@ -9,7 +9,7 @@ from kivy.lang import Builder
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
-from kivymd.app import MDApp
+# from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import TwoLineAvatarIconListItem, ILeftBodyTouch
 
@@ -20,22 +20,29 @@ from kivymd.uix.textfield import MDTextField
 
 from datetime import datetime
 
-from assets.add_task_view import AddTaskView
+from assets.add_task_screen import AddTaskScreen
 from assets.database import Database
 
 # Initialize db instance
 db = Database()
 
-# Builder.load_file("assets/main_screen.kv")
-# Builder.load_file("assets/groups_view.kv")
-# Builder.load_file("assets/add_task_view.kv")
+Builder.load_file("assets/task_list_screen.kv")
+Builder.load_file("assets/groups_view.kv")
+# Builder.load_file("assets/add_task_screen.kv")
 # Builder.load_file("assets/edit_task_screen.kv")
 
 
-class MainScreen(Screen):
-    # def __init__(self, **kwargs):
-    #     super().__init__(**kwargs)
+class GroupsView(MDBoxLayout):
     pass
+
+
+class TaskListScreen(Screen):
+    pass
+    # def __init__(self, pk=None, **kwargs):
+    #     super().__init__(**kwargs)
+
+    # def on_enter(self):
+    #     self.ids.bottom_nav_bar.switch_tab("tasks_list")
 
 
 class ListItemWithCheckbox(TwoLineAvatarIconListItem):
@@ -63,20 +70,9 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
     def edit_task(self, the_list_item):
         task_data = db.get_task_data(the_list_item.pk)
         print(task_data)
-        # this one works
-        # print(
-        #     MDApp.get_running_app()
-        #     .root.get_screen(name="task list screen")
-        #     .ids.add_task_v.ids
-        # )
-        add_task_view_ids = (
-            MDApp.get_running_app()
-            .root.get_screen(name="task list screen")
-            .ids.add_task_v.ids
-        )
-        # print(add_task_view_ids)
-        add_task_view_ids["task_text"].text = task_data[2]
-        add_task_view_ids["date_text"].text = task_data[3]
+        ScreenManager().get_screen(
+            name="edit task screen"
+        ).ids.edit_task_text.text = task_data[2]
 
 
 class LeftCheckbox(ILeftBodyTouch, MDCheckbox):

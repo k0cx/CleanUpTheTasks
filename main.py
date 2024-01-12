@@ -21,17 +21,21 @@ from kivymd.app import MDApp
 
 # from datetime import datetime
 
-from assets.main_screen import MainScreen, ListItemWithCheckbox
-from assets.add_task_view import AddTaskView
+from assets.task_list_screen import TaskListScreen, ListItemWithCheckbox
+from assets.add_task_screen import AddTaskScreen
+from assets.edit_task_screen import EditTaskScreen
 
 from assets.database import Database
 
 # Initialize db instance
 db = Database()
 
-Builder.load_file("assets/main_screen.kv")
-Builder.load_file("assets/groups_view.kv")
-Builder.load_file("assets/add_task_view.kv")
+Builder.load_file("assets/edit_task_screen.kv")
+
+
+class EditTaskScreen(Screen):
+    def __init__(self, **kwargs):
+        super(Screen, self).__init__(**kwargs)
 
 
 class RootScreenManager(ScreenManager):
@@ -59,7 +63,9 @@ class MainApp(MDApp):
                         secondary_text=task[2],
                     )
                     # self.root.ids.container.add_widget(add_task)
-                    self.root.current_screen.ids.container.add_widget(add_task)
+                    self.root.get_screen(
+                        name="task list screen"
+                    ).ids.container.add_widget(add_task)
 
             if completed_tasks != []:
                 for task in completed_tasks:
@@ -69,10 +75,10 @@ class MainApp(MDApp):
                         secondary_text=task[2],
                     )
                     add_task.ids.check.active = True
-                    self.root.current_screen.ids.container.add_widget(add_task)
-                    # self.root.get_screen(
-                    #     name="task list screen"
-                    # ).ids.container.add_widget(add_task)
+                    # self.root.ids.container.add_widget(add_task)
+                    self.root.get_screen(
+                        name="task list screen"
+                    ).ids.container.add_widget(add_task)
         except Exception as e:
             print(e)
             pass
