@@ -1,4 +1,4 @@
-<MainScreen>:
+<MainScreen@RootScreenManager>:
     name: "task list screen"
 
     MDBoxLayout:
@@ -49,6 +49,7 @@
                 icon: "pencil"
 
                 AddTaskView:
+                    id: add_task_v
 
 
 <ListItemWithCheckbox>:
@@ -59,6 +60,7 @@
         # app.root.current = "edit task screen"
         app.root.current_screen.ids.bottom_nav_bar.switch_tab("add_task")
         root.edit_task(the_list_item)
+        # app.root.ids.add_task_view.ids.task_text.text = "text1"
 
     LeftCheckbox:
         id: check

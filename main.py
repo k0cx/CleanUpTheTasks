@@ -29,6 +29,10 @@ from assets.database import Database
 # Initialize db instance
 db = Database()
 
+Builder.load_file("assets/main_screen.kv")
+Builder.load_file("assets/groups_view.kv")
+Builder.load_file("assets/add_task_view.kv")
+
 
 class RootScreenManager(ScreenManager):
     pass

@@ -26,13 +26,15 @@ from assets.database import Database
 # Initialize db instance
 db = Database()
 
-Builder.load_file("assets/main_screen.kv")
-Builder.load_file("assets/groups_view.kv")
+# Builder.load_file("assets/main_screen.kv")
+# Builder.load_file("assets/groups_view.kv")
 # Builder.load_file("assets/add_task_view.kv")
 # Builder.load_file("assets/edit_task_screen.kv")
 
 
 class MainScreen(Screen):
+    # def __init__(self, **kwargs):
+    #     super().__init__(**kwargs)
     pass
 
 
@@ -61,9 +63,20 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
     def edit_task(self, the_list_item):
         task_data = db.get_task_data(the_list_item.pk)
         print(task_data)
-        # self.parent.ids.task_text.text = task_data[2]
-        # ScreenManager().current.ids.task_text.text = task_data[2]
-        print(self.ids)
+        # this one works
+        # print(
+        #     MDApp.get_running_app()
+        #     .root.get_screen(name="task list screen")
+        #     .ids.add_task_v.ids
+        # )
+        add_task_view_ids = (
+            MDApp.get_running_app()
+            .root.get_screen(name="task list screen")
+            .ids.add_task_v.ids
+        )
+        # print(add_task_view_ids)
+        add_task_view_ids["task_text"].text = task_data[2]
+        add_task_view_ids["date_text"].text = task_data[3]
 
 
 class LeftCheckbox(ILeftBodyTouch, MDCheckbox):
