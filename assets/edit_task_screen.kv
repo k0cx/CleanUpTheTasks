@@ -1,49 +1,95 @@
 <EditTaskScreen>:
-    name: "edit task screen"
-    
+
     MDBoxLayout:
         orientation: "vertical"
         padding:"10dp"
         # adaptive_height: True
         # size_hint_x: 1
-
-        MDFlatButton:
-            text: "SET1"
-            on_release: root.set_text()
-
-        MDLabel:
-            md_bg_color: "lightblue"
-            text: "task edit screen"
-            halign: "center"
-        
-        MDBoxLayout:
-            id: edit_container
+        id: edit_container
 
         MDTextField:
-            id: edit_task_text
+            id: task_text
             text: ""
             max_text_length: 50
             max_length_text_color: "red"
             required: True
             # on_text_validate: (root.add_task(task_text, date_text.text))
 
+        ScrollView:
+            pos_hint: {"center_y": .5, "center_x": .5}
+            size_hint: .9, .8
+            bar_width: 5
+            do_scroll_x: False
+
+            MDTextField:
+                id: task_description
+                adaptive_height: True
+                hint_text: "Description"
+                text: "Not finish this functionality yet..."
+                max_text_length: 500
+                mode: "rectangle"
+                max_length_text_color: "red"
+                # helper_text: "500"
+                multiline: True
+                required: False
+                # on_focus: if self.focus: root.show_description_dialog()
+
         MDGridLayout:
-            rows: 1
+            rows: 4
             cols: 2
             adaptive_height: True
             width: 1
 
             MDTextField:
-                id: edit_date_text
+                id: date_text
                 icon_left: "calendar"
                 icon_left_color_normal: 0, 0, 0, 1
                 halign: "right"
                 hint_text: "date"
                 on_focus: if self.focus: root.date_picker()
-            
+
             MDIconButton:
                 icon: "minus-thick"
-                on_release: edit_date_text.text = ""
+                on_release: date_text.text = ""
+
+            MDTextField:
+                id: project
+                text: "Not finish this functionality yet..."
+                icon_left: "collage"
+                icon_left_color_normal: 0, 0, 0, 1
+                halign: "right"
+                hint_text: "project"
+                on_focus: if self.focus: root.project_select()
+
+            MDIconButton:
+                icon: "minus-thick"
+                on_release: project.text = ""
+
+            MDTextField:
+                id: context
+                icon_left: "contain"
+                text: "Not finish this functionality yet..."
+                icon_left_color_normal: 0, 0, 0, 1
+                halign: "right"
+                hint_text: "context"
+                on_focus: if self.focus: root.context_select()
+
+            MDIconButton:
+                icon: "minus-thick"
+                on_release: context.text = ""
+
+            MDTextField:
+                id: attachment
+                icon_left: "attachment"
+                text: "Not finish this functionality yet..."
+                icon_left_color_normal: 0, 0, 0, 1
+                halign: "right"
+                hint_text: "attachment"
+                on_focus: if self.focus: root.file_manager_open()
+
+            MDIconButton:
+                icon: "minus-thick"
+                on_release: attachment.text = ""
 
         MDGridLayout:
             orientation: "bt-rl"
@@ -51,30 +97,30 @@
             adaptive_height: True
             rows: 1
             padding: 0, "20dp", "5dp", 0
-                        
+
             MDFlatButton:
                 text: "[b]SAVE[/b]"
                 font_size: "18sp"
                 spacing: "30dp", 0, "10dp", 0
                 on_release: 
-                    # root.write_task(task_text, date_text.text)
+                    root.write_task(task_text, date_text.text)
                     app.root.get_screen(name="task list screen").ids.container.clear_widgets()
                     app.on_start()
-                    # root.clear_form()
+                    root.clear_form()
                     app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
                     app.root.transition.direction = "right"
                     app.root.current = "task list screen"
-                            
+
             MDFlatButton:
                 halign: "right"
                 text: "CANCEL"
                 font_size: "18sp"
                 on_release:
-                    # root.clear_form()
+                    root.clear_form()
                     app.root.get_screen(name="task list screen").ids.bottom_nav_bar.switch_tab("tasks_list")
                     app.root.transition.direction = "right"
                     app.root.current = "task list screen"
-            
+
             MDLabel:
                 # spacer
             MDIconButton:

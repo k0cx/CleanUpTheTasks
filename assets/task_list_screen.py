@@ -20,16 +20,10 @@ from kivymd.uix.textfield import MDTextField
 
 from datetime import datetime
 
-from assets.add_task_screen import AddTaskScreen
 from assets.database import Database
 
 # Initialize db instance
 db = Database()
-
-# Builder.load_file("assets/task_list_screen.kv")
-# Builder.load_file("assets/groups_view.kv")
-# Builder.load_file("assets/add_task_screen.kv")
-# Builder.load_file("assets/edit_task_screen.kv")
 
 
 class GroupsView(MDBoxLayout):
@@ -38,11 +32,6 @@ class GroupsView(MDBoxLayout):
 
 class TaskListScreen(Screen):
     pass
-    # def __init__(self, pk=None, **kwargs):
-    #     super().__init__(**kwargs)
-
-    # def on_enter(self):
-    #     self.ids.bottom_nav_bar.switch_tab("tasks_list")
 
 
 class ListItemWithCheckbox(TwoLineAvatarIconListItem):
@@ -71,8 +60,8 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
         task_data = db.get_task_data(the_list_item.pk)
         print(task_data)
         edit_task_ids = MDApp.get_running_app().root.ids.edit_task_screen.ids
-        edit_task_ids["edit_task_text"].text = task_data[2]
-        edit_task_ids["edit_date_text"].text = task_data[3]
+        edit_task_ids["task_text"].text = task_data[2]
+        edit_task_ids["date_text"].text = task_data[3]
 
 
 class LeftCheckbox(ILeftBodyTouch, MDCheckbox):

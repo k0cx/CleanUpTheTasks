@@ -22,7 +22,6 @@ from kivymd.app import MDApp
 # from datetime import datetime
 
 from assets.task_list_screen import TaskListScreen, ListItemWithCheckbox
-from assets.add_task_screen import AddTaskScreen
 from assets.edit_task_screen import EditTaskScreen
 
 from assets.database import Database
@@ -32,13 +31,12 @@ db = Database()
 
 Builder.load_file("assets/task_list_screen.kv")
 Builder.load_file("assets/groups_view.kv")
-Builder.load_file("assets/add_task_screen.kv")
 Builder.load_file("assets/edit_task_screen.kv")
 
 
-class EditTaskScreen(Screen):
-    def __init__(self, **kwargs):
-        super(Screen, self).__init__(**kwargs)
+# class EditTaskScreen(Screen):
+#     def __init__(self, **kwargs):
+#         super(Screen, self).__init__(**kwargs)
 
 
 class RootScreenManager(ScreenManager):

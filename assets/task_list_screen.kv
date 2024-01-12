@@ -1,5 +1,4 @@
 <TaskListScreen>:
-    name: "task list screen"
 
     MDBoxLayout:
         orientation: "vertical"
@@ -41,28 +40,19 @@
             MDBottomNavigationItem:
                 name: "groups_view"
                 text: "Groups view"
-                icon: "calendar-multiple-check"
+                icon: "collage"
                 # badge_icon: "numeric-5"
 
                 GroupsView:
 
             MDBottomNavigationItem:
-                name: "add_task"
-                text: "Add task"
-                icon: "plus-thick"
+                name: "dit_task"
+                text: "Edit task"
+                icon: "pencil-outline"
                 on_tab_release:
                     app.root.transition.direction = "left"
-                    app.root.current = "add task screen"
+                    app.root.current = "edit task screen"
 
-# <AddTaskScreen>:
-#     name: "add task screen"
-#     transition: FadeTransition()
-    
-#     AddTaskScreen:
-
-# <EditTaskScreen>:
-#     name: "edit task screen"
-#     EditTaskScreen:
 
 <ListItemWithCheckbox>:
     id: the_list_item
