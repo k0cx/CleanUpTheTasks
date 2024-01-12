@@ -17,8 +17,9 @@
         MDBottomNavigation:
             id: bottom_nav_bar
             panel_color: "#ee6002"
-            selected_color_background: 1, 1, 1, .2
+            selected_color_background: 0, 0, 0, .5
             text_color_active: "lightgrey"
+            use_text: False
             # size_hint: 1, .5
 
             MDBottomNavigationItem:
@@ -69,7 +70,7 @@
     on_release:
         app.root.transition.direction = "left"
         app.root.current = "edit task screen"
-        # root.edit_task(the_list_item)
+        root.edit_task(the_list_item)
 
     LeftCheckbox:
         id: check

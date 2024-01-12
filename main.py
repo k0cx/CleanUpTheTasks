@@ -30,6 +30,9 @@ from assets.database import Database
 # Initialize db instance
 db = Database()
 
+Builder.load_file("assets/task_list_screen.kv")
+Builder.load_file("assets/groups_view.kv")
+Builder.load_file("assets/add_task_screen.kv")
 Builder.load_file("assets/edit_task_screen.kv")
 
 

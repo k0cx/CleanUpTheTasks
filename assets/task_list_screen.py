@@ -9,7 +9,7 @@ from kivy.lang import Builder
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen
 
-# from kivymd.app import MDApp
+from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import TwoLineAvatarIconListItem, ILeftBodyTouch
 
@@ -26,8 +26,8 @@ from assets.database import Database
 # Initialize db instance
 db = Database()
 
-Builder.load_file("assets/task_list_screen.kv")
-Builder.load_file("assets/groups_view.kv")
+# Builder.load_file("assets/task_list_screen.kv")
+# Builder.load_file("assets/groups_view.kv")
 # Builder.load_file("assets/add_task_screen.kv")
 # Builder.load_file("assets/edit_task_screen.kv")
 
@@ -70,9 +70,9 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
     def edit_task(self, the_list_item):
         task_data = db.get_task_data(the_list_item.pk)
         print(task_data)
-        ScreenManager().get_screen(
-            name="edit task screen"
-        ).ids.edit_task_text.text = task_data[2]
+        edit_task_ids = MDApp.get_running_app().root.ids.edit_task_screen.ids
+        edit_task_ids["edit_task_text"].text = task_data[2]
+        edit_task_ids["edit_date_text"].text = task_data[3]
 
 
 class LeftCheckbox(ILeftBodyTouch, MDCheckbox):
