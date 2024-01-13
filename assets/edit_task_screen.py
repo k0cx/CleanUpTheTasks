@@ -25,6 +25,12 @@ from assets.database import Database
 db = Database()
 
 
+class CheckSwitchItem(MDBoxLayout):
+    text = StringProperty()
+    group = StringProperty()
+    task_id = StringProperty()
+
+
 class EditTaskScreen(Screen):
     def date_picker(self):
         """Opens the date picker"""
@@ -91,7 +97,7 @@ class EditTaskScreen(Screen):
             exit_manager=self.exit_manager,
             select_path=self.select_path,
         )
-        self.file_manager.show(os.path.expanduser("~"))  # output manager to the screen
+        self.file_manager.show(os.path.expanduser("~"))
         self.manager_open = True
 
     def select_path(self, path: str):
@@ -104,8 +110,6 @@ class EditTaskScreen(Screen):
         self.ids.attachment.text = path
 
     def exit_manager(self, *args):
-        """Called when the user reaches the root of the directory tree."""
-
         self.manager_open = False
         self.file_manager.close()
 
@@ -118,10 +122,17 @@ class EditTaskScreen(Screen):
         return True
 
     def write_task(self, task, task_date):
-        """Add task to db"""
+        if self.ids.task_id.text == "":
+            db.create_task(task.text, task_date)
+            toast(text="added", duration=2)
+        else:
+            db.update_task(self.ids.task_id.text[3:], task.text, task_date)
+            toast(text="updated", duration=2)
 
-        db.create_task(task.text, task_date)
-        toast(text="Task added", duration=2)
+    def delete_task(self, taskid):
+        # self.parent.remove_widget(the_list_item)
+        db.delete_task(taskid[3:])
+        # print(task_id[3:])
 
     def back_action(self):
         sm = MDApp.get_running_app().root
@@ -130,6 +141,7 @@ class EditTaskScreen(Screen):
         )
         sm.transition = SlideTransition(direction="right")
         sm.current = "task list screen"
+        self.ids.task_id.text = ""
         self.ids.task_text.text = ""
         self.ids.task_description.text = ""
         self.ids.date_text.text = ""

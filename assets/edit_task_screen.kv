@@ -3,8 +3,6 @@
     MDBoxLayout:
         orientation: "vertical"
         # padding:"10dp"
-        # adaptive_height: True
-        # size_hint_x: 1
         id: edit_container
 
         MDTopAppBar:
@@ -14,11 +12,19 @@
             elevation: 0
             opposite_colors: True
             title: "Edit task"
+            anchor_title: "left"
             left_action_items: [["arrow-left", lambda x : root.back_action()]]
+
+        CheckSwitchItem:
+            group: "root"
+            text: "mark as done"
+            size_hint_x: .9
+            pos_hint_x: "center"
 
         MDTextField:
             id: task_text
             text: ""
+            text_color_normal: 0, 0, 0, 1
             max_text_length: 50
             max_length_text_color: "red"
             required: True
@@ -47,12 +53,13 @@
             rows: 4
             cols: 2
             adaptive_height: True
-            width: 1
+            width: .9
 
             MDTextField:
                 id: date_text
                 icon_left: "calendar"
                 icon_left_color_normal: 0, 0, 0, 1
+                text_color_normal: 0, 0, 0, 1
                 halign: "right"
                 hint_text: "date"
                 on_focus: if self.focus: root.date_picker()
@@ -125,11 +132,45 @@
                     root.back_action()
 
             MDLabel:
-                # spacer
+                # spacer            
+            MDLabel:
+                id: task_id
+                text: ""
+                # adaptive_height: True
+                halign: "left"
+                font_size: "14sp"
+                pos_hint: {"center_y": .5}
+                theme_text_color: "Custom"
+                text_color: "lightgray"
+
             MDIconButton:
-                icon: 'trash-can-outline'
+                icon: "trash-can-outline"
                 theme_text_color: "Custom"
                 text_color: 1, 0, 0, 1
+                icon_size: "28sp"
                 # TODO: confirmation dialog
-                # on_release:
-                #     root.delete_item(the_list_item)
+                on_release:
+                    root.delete_task(task_id.text)
+                    app.root.get_screen(name="task list screen").ids.container.clear_widgets()
+                    app.on_start()
+                    root.back_action()
+
+
+<CheckSwitchItem>:
+    adaptive_height: True
+    size_hint_x: .9
+    padding: "10dp"
+    
+    MDCheckbox:
+        size_hint: None, None
+        size: "36dp", "36dp"
+        pos_hint: {"center_y": .5}
+        group: root.group
+    
+    MDLabel:
+        text: root.text
+        adaptive_height: True
+        halign: "left"
+        pos_hint: {"center_y": .5}
+        theme_text_color: "Custom"
+        text_color: "gray"

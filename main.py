@@ -21,8 +21,8 @@ from kivymd.app import MDApp
 
 # from datetime import datetime
 
-from assets.task_list_screen import TaskListScreen, ListItemWithCheckbox
-from assets.edit_task_screen import EditTaskScreen
+from assets.task_list_screen import *
+from assets.edit_task_screen import *
 
 from assets.database import Database
 

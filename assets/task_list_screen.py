@@ -60,6 +60,8 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
         task_data = db.get_task_data(the_list_item.pk)
         print(task_data)
         edit_task_ids = MDApp.get_running_app().root.ids.edit_task_screen.ids
+
+        edit_task_ids["task_id"].text = "id:" + str(task_data[0])
         edit_task_ids["task_text"].text = task_data[2]
         edit_task_ids["date_text"].text = task_data[3]
 

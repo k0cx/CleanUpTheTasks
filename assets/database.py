@@ -9,14 +9,12 @@ class Database:
         self.create_task_table()  # create the tasks table
 
     def create_task_table(self):
-        """Create tasks table"""
         self.cursor.execute(
             "CREATE TABLE IF NOT EXISTS tasks(id integer PRIMARY KEY AUTOINCREMENT, task varchar(50) NOT NULL, due_date varchar(50), completed BOOLEAN NOT NULL CHECK (completed IN (0, 1)))"
         )
         self.con.commit()
 
     def create_task(self, task, due_date=None):
-        """Create a task"""
         self.cursor.execute(
             "INSERT INTO tasks(task, due_date, completed) VALUES(?, ?, ?)",
             (task, due_date, 0),
@@ -30,8 +28,18 @@ class Database:
         ).fetchall()
         return created_task[-1]
 
+    def update_task(self, taskid, task, due_date):
+        self.cursor.execute(
+            "UPDATE tasks SET task=?, due_date=? WHERE id=?",
+            (
+                task,
+                due_date,
+                taskid,
+            ),
+        )
+        self.con.commit()
+
     def get_tasks(self):
-        """Get all completed and uncomplete tasks"""
         uncomplete_tasks = self.cursor.execute(
             "SELECT id, task, due_date FROM tasks WHERE completed = 0"
         ).fetchall()
@@ -48,12 +56,10 @@ class Database:
         return task_data
 
     def mark_task_as_complete(self, taskid):
-        """Mark tasks as complete"""
         self.cursor.execute("UPDATE tasks SET completed=1 WHERE id=?", (taskid,))
         self.con.commit()
 
     def mark_task_as_incomplete(self, taskid):
-        """Mark task as uncomplete"""
         self.cursor.execute("UPDATE tasks SET completed=0 WHERE id=?", (taskid,))
         self.con.commit()
 
@@ -64,7 +70,6 @@ class Database:
         return task_text[0][0]
 
     def delete_task(self, taskid):
-        """Delete a task"""
         self.cursor.execute("DELETE FROM tasks WHERE id=?", (taskid,))
         self.con.commit()
 
