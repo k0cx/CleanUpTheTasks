@@ -1,9 +1,4 @@
-from kivy.config import Config
-
-Config.set("graphics", "resizable", True)
-Config.set("graphics", "width", "350")
-Config.set("graphics", "height", "600")
-Config.set("kivy", "exit_on_escape", "0")
+from datetime import datetime
 
 from kivy.lang import Builder
 from kivy.properties import StringProperty
@@ -13,12 +8,9 @@ from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.list import TwoLineAvatarIconListItem, ILeftBodyTouch
 
-# from kivymd.uix.screen import MDScreen
-# from kivymd.uix.screenmanager import MDScreenManager
+from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.textfield import MDTextField
-
-from datetime import datetime
 
 from assets.database import Database
 
@@ -31,7 +23,24 @@ class GroupsView(MDBoxLayout):
 
 
 class TaskListScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        menu_items = [
+            {
+                # "viewclass": "MDBoxLayout",
+                "text": "Item",
+                # "on_release": lambda x: self.menu_callback(x),
+            }
+        ]
+        self.menu = MDDropdownMenu(items=menu_items)
+
+    def menu_open(self, button):
+        self.menu.caller = button
+        self.menu.open()
+
+    def menu_callback(self, text_item):
+        self.menu.dismiss()
+        print(text_item)
 
 
 class TaskListCreator:

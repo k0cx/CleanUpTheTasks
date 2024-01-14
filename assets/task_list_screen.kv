@@ -11,8 +11,8 @@
             opposite_colors: True
             title: "CUTT"
             anchor_title: "left"
-            left_action_items:  [["menu", lambda x: x]]
-            right_action_items: [["dots-vertical", lambda x: x], ["magnify", lambda x: x]]
+            # left_action_items:  [["menu", lambda x: x]]
+            right_action_items: [["magnify", lambda x: x], ["dots-vertical", lambda x: root.menu_open(x)]]
         
         MDBottomNavigation:
             id: bottom_nav_bar
@@ -69,10 +69,3 @@
             root.mark(check, the_list_item)
             app.root.get_screen(name="task list screen").ids.container.clear_widgets()
             app.on_start()
-
-    # IconRightWidget:
-    #     icon: 'trash-can-outline'
-    #     theme_text_color: "Custom"
-    #     text_color: 1, 0, 0, 1
-    #     on_release:
-    #         root.delete_item(the_list_item)

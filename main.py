@@ -8,35 +8,16 @@ Config.set("kivy", "exit_on_escape", "0")
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
-# from kivy.properties import StringProperty
-
 from kivymd.app import MDApp
-
-# from kivymd.uix.screenmanager import MDScreenManager
-
-# from kivymd.uix.list import TwoLineAvatarIconListItem, ILeftBodyTouch
-# from kivymd.uix.selectioncontrol import MDCheckbox
-
-# from kivymd.uix.textfield import MDTextField
-
-# from datetime import datetime
 
 from assets.task_list_screen import *
 from assets.edit_task_screen import *
-
 from assets.database import Database
 
-# Initialize db instance
-db = Database()
 
 Builder.load_file("assets/task_list_screen.kv")
 Builder.load_file("assets/groups_view.kv")
 Builder.load_file("assets/edit_task_screen.kv")
-
-
-# class EditTaskScreen(Screen):
-#     def __init__(self, **kwargs):
-#         super(Screen, self).__init__(**kwargs)
 
 
 class RootScreenManager(ScreenManager):
