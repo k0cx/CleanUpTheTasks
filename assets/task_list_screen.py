@@ -2,7 +2,7 @@ from datetime import datetime
 
 from kivy.lang import Builder
 from kivy.properties import StringProperty
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -23,24 +23,10 @@ class GroupsView(MDBoxLayout):
 
 
 class TaskListScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        menu_items = [
-            {
-                # "viewclass": "MDBoxLayout",
-                "text": "Item",
-                # "on_release": lambda x: self.menu_callback(x),
-            }
-        ]
-        self.menu = MDDropdownMenu(items=menu_items)
-
-    def menu_open(self, button):
-        self.menu.caller = button
-        self.menu.open()
-
-    def menu_callback(self, text_item):
-        self.menu.dismiss()
-        print(text_item)
+    def open_settings(self):
+        sm = MDApp.get_running_app().root
+        sm.transition = SlideTransition(direction="left")
+        sm.current = "settings screen"
 
 
 class TaskListCreator:

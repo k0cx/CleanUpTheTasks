@@ -12,12 +12,14 @@ from kivymd.app import MDApp
 
 from assets.task_list_screen import *
 from assets.edit_task_screen import *
+from assets.settings_screen import *
 from assets.database import Database
 
 
 Builder.load_file("assets/task_list_screen.kv")
 Builder.load_file("assets/groups_view.kv")
 Builder.load_file("assets/edit_task_screen.kv")
+Builder.load_file("assets/settings_screen.kv")
 
 
 class RootScreenManager(ScreenManager):
