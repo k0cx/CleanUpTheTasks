@@ -34,6 +34,40 @@ class TaskListScreen(Screen):
     pass
 
 
+class TaskListCreator:
+    def create_task_list_widget(self):
+        try:
+            completed_tasks, uncomplete_tasks = db.get_tasks()
+
+            if uncomplete_tasks != []:
+                for task in uncomplete_tasks:
+                    add_task = ListItemWithCheckbox(
+                        pk=task[0],
+                        text=task[1],
+                        secondary_text=task[2],
+                    )
+                    # self.root.ids.container.add_widget(add_task)
+                    MDApp.get_running_app().root.get_screen(
+                        name="task list screen"
+                    ).ids.container.add_widget(add_task)
+
+            if completed_tasks != []:
+                for task in completed_tasks:
+                    add_task = ListItemWithCheckbox(
+                        pk=task[0],
+                        text="[s]" + task[1] + "[/s]",
+                        secondary_text=task[2],
+                    )
+                    add_task.ids.check.active = True
+                    # self.root.ids.container.add_widget(add_task)
+                    MDApp.get_running_app().root.get_screen(
+                        name="task list screen"
+                    ).ids.container.add_widget(add_task)
+        except Exception as e:
+            print(e)
+            pass
+
+
 class ListItemWithCheckbox(TwoLineAvatarIconListItem):
     """Custom list item"""
 

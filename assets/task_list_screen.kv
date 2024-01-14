@@ -31,7 +31,7 @@
 
                 ScrollView:
                     pos_hint: {"center_y": .5, "center_x": .5}
-                    size_hint: .9, .8
+                    # size_hint: .9, .8
                     bar_width: 5
                     do_scroll_x: False
 
@@ -67,10 +67,12 @@
         id: check
         on_release: 
             root.mark(check, the_list_item)
+            app.root.get_screen(name="task list screen").ids.container.clear_widgets()
+            app.on_start()
 
-    IconRightWidget:
-        icon: 'trash-can-outline'
-        theme_text_color: "Custom"
-        text_color: 1, 0, 0, 1
-        on_release:
-            root.delete_item(the_list_item)
+    # IconRightWidget:
+    #     icon: 'trash-can-outline'
+    #     theme_text_color: "Custom"
+    #     text_color: 1, 0, 0, 1
+    #     on_release:
+    #         root.delete_item(the_list_item)

@@ -31,17 +31,13 @@ class Database:
     def update_task(self, taskid, task, due_date):
         self.cursor.execute(
             "UPDATE tasks SET task=?, due_date=? WHERE id=?",
-            (
-                task,
-                due_date,
-                taskid,
-            ),
+            (task, due_date, taskid),
         )
         self.con.commit()
 
     def get_tasks(self):
         uncomplete_tasks = self.cursor.execute(
-            "SELECT id, task, due_date FROM tasks WHERE completed = 0"
+            "SELECT id, task, due_date FROM tasks WHERE completed = 0 ORDER BY due_date ASC"
         ).fetchall()
         completed_tasks = self.cursor.execute(
             "SELECT id, task, due_date FROM tasks WHERE completed = 1"
@@ -51,7 +47,8 @@ class Database:
 
     def get_task_data(self, taskid):
         task_data = self.cursor.execute(
-            "SELECT id, completed, task, due_date FROM tasks WHERE id = ?", (taskid,)
+            "SELECT id, completed, task, due_date FROM tasks WHERE id = ? ORDER BY due_date ASC",
+            (taskid,),
         ).fetchone()
         return task_data
 

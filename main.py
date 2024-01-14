@@ -53,36 +53,7 @@ class MainApp(MDApp):
     def on_start(self):
         """Load the saved tasks and add them to the MDList widget when the application starts"""
 
-        try:
-            completed_tasks, uncomplete_tasks = db.get_tasks()
-
-            if uncomplete_tasks != []:
-                for task in uncomplete_tasks:
-                    add_task = ListItemWithCheckbox(
-                        pk=task[0],
-                        text=task[1],
-                        secondary_text=task[2],
-                    )
-                    # self.root.ids.container.add_widget(add_task)
-                    self.root.get_screen(
-                        name="task list screen"
-                    ).ids.container.add_widget(add_task)
-
-            if completed_tasks != []:
-                for task in completed_tasks:
-                    add_task = ListItemWithCheckbox(
-                        pk=task[0],
-                        text="[s]" + task[1] + "[/s]",
-                        secondary_text=task[2],
-                    )
-                    add_task.ids.check.active = True
-                    # self.root.ids.container.add_widget(add_task)
-                    self.root.get_screen(
-                        name="task list screen"
-                    ).ids.container.add_widget(add_task)
-        except Exception as e:
-            print(e)
-            pass
+        TaskListCreator().create_task_list_widget()
 
 
 if __name__ == "__main__":
