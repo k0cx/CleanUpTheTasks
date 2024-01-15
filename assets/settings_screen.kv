@@ -2,6 +2,7 @@
 
     MDBoxLayout:
         orientation: "vertical"
+        spacing: "10dp"
 
         MDTopAppBar:
             # y: root.height - self.height
@@ -52,19 +53,21 @@
             size_hint_x: 1
             adaptive_height: True
             rows: 1
-            padding: 0, "20dp", "5dp", 0
+            padding: "10dp", "10dp", "20dp", "30dp"
+            spacing: "10dp"
 
             MDFlatButton:
                 text: "[b]SAVE[/b]"
                 font_size: "18sp"
-                spacing: "30dp", 0, "10dp", 0
+                pos_hint: {"center_y": .5}
                 on_release:
                     root.check_crypt()
 
             MDFlatButton:
-                halign: "right"
+                # halign: "right"
                 text: "CANCEL"
                 font_size: "18sp"
+                pos_hint: {"center_y": .5}
                 on_release:
                     root.back_action()
 

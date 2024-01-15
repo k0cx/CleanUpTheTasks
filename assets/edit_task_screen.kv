@@ -4,6 +4,7 @@
         orientation: "vertical"
         # padding:"10dp"
         id: edit_container
+        spacing: "10dp"
 
         MDTopAppBar:
             # y: root.height - self.height
@@ -112,22 +113,24 @@
             size_hint_x: 1
             adaptive_height: True
             rows: 1
-            padding: 0, "20dp", "5dp", 0
+            padding: "10dp", "10dp", "20dp", "30dp"
+            spacing: "10dp"
 
-            MDFlatButton:
+            MDRectangleFlatButton:
                 text: "[b]SAVE[/b]"
                 font_size: "18sp"
-                spacing: "30dp", 0, "10dp", 0
+                pos_hint: {"center_y": .5}
                 on_release: 
                     root.write_task(task_text, date_text.text)
                     app.root.get_screen(name="task list screen").ids.container.clear_widgets()
                     app.on_start()
                     root.back_action()
 
-            MDFlatButton:
-                halign: "right"
+            MDRectangleFlatButton:
+                # halign: "right"
                 text: "CANCEL"
                 font_size: "18sp"
+                pos_hint: {"center_y": .5}
                 on_release:
                     root.back_action()
 
@@ -140,6 +143,7 @@
                 halign: "left"
                 font_size: "14sp"
                 pos_hint: {"center_y": .5}
+                padding: 0, "10dp", 0, 0
                 theme_text_color: "Custom"
                 text_color: "lightgray"
 
@@ -148,6 +152,8 @@
                 theme_text_color: "Custom"
                 text_color: 1, 0, 0, 1
                 icon_size: "28sp"
+                pos_hint: {"center_y": .5}
+                padding: 0, "10dp", 0, 0
                 # TODO: confirmation dialog
                 on_release:
                     root.delete_task(task_id.text)
