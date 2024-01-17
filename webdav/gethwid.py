@@ -13,16 +13,16 @@ def get_hardware_id():
     _ci = cpuinfo.get_cpu_info()
 
     cpu_inf = (
-        "%s%s%s%s"
-        % (_ci["hz_actual"], _ci["brand_raw"], "".join(_ci["flags"]), _ci["arch"])
+        "%s%s%s%s" % (_ci["model"], _ci["family"], "".join(_ci["flags"]), _ci["arch"])
     ).replace(" ", "")
 
-    print(cpu_inf)
+    # print(cpu_inf)
     d = hashlib.sha512()
     d.update(cpu_inf.encode("utf-8", errors="ignore"))
 
     return d.hexdigest()
 
 
+# get_hardware_id()
 # print(cpuinfo.get_cpu_info())
 print(get_hardware_id())

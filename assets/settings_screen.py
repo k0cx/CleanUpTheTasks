@@ -16,40 +16,40 @@ class SettingsScreen(Screen):
         sm.transition = SlideTransition(direction="right")
         sm.current = "task list screen"
 
-    def crypt_input(self):
-        sm = MDApp.get_running_app().root
-        with open(Path(__file__).parent.resolve() / "settings.ini", "wb") as f:
-            f.write(
-                bcrypt.hashpw(
-                    sm.ids.settings_screen.ids.login_field.text.encode(),
-                    bcrypt.gensalt(),
-                )
-            )
-        with open(Path(__file__).parent.resolve() / "settings2.ini", "wb") as f:
-            f.write(
-                bcrypt.hashpw(
-                    sm.ids.settings_screen.ids.password_container.ids.password_field.text.encode(),
-                    bcrypt.gensalt(),
-                )
-            )
+    # def crypt_input(self):
+    #     sm = MDApp.get_running_app().root
+    #     with open(Path(__file__).parent.resolve() / "settings.ini", "wb") as f:
+    #         f.write(
+    #             bcrypt.hashpw(
+    #                 sm.ids.settings_screen.ids.login_field.text.encode(),
+    #                 bcrypt.gensalt(),
+    #             )
+    #         )
+    #     with open(Path(__file__).parent.resolve() / "settings2.ini", "wb") as f:
+    #         f.write(
+    #             bcrypt.hashpw(
+    #                 sm.ids.settings_screen.ids.password_container.ids.password_field.text.encode(),
+    #                 bcrypt.gensalt(),
+    #             )
+    #         )
 
-    def check_crypt(self):
-        sm = MDApp.get_running_app().root
-        with open(Path(__file__).parent.resolve() / "settings.ini", "rb") as f:
-            b_login = f.read()
-            print(
-                bcrypt.checkpw(
-                    sm.ids.settings_screen.ids.login_field.text.encode(),
-                    bcrypt.gensalt(),
-                )
-            )
-        with open(Path(__file__).parent.resolve() / "settings2.ini", "rb") as f:
-            f.read(
-                bcrypt.hashpw(
-                    sm.ids.settings_screen.ids.password_container.ids.password_field.text.encode(),
-                    bcrypt.gensalt(),
-                )
-            )
+    # def check_crypt(self):
+    #     sm = MDApp.get_running_app().root
+    #     with open(Path(__file__).parent.resolve() / "settings.ini", "rb") as f:
+    #         b_login = f.read()
+    #         print(
+    #             bcrypt.checkpw(
+    #                 sm.ids.settings_screen.ids.login_field.text.encode(),
+    #                 bcrypt.gensalt(),
+    #             )
+    #         )
+    #     with open(Path(__file__).parent.resolve() / "settings2.ini", "rb") as f:
+    #         f.read(
+    #             bcrypt.hashpw(
+    #                 sm.ids.settings_screen.ids.password_container.ids.password_field.text.encode(),
+    #                 bcrypt.gensalt(),
+    #             )
+    #         )
 
     def check_client(self):
         data = {
