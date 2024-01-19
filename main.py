@@ -1,20 +1,19 @@
 from kivy.config import Config
-
-Config.set("graphics", "resizable", True)
-Config.set("graphics", "width", "350")
-Config.set("graphics", "height", "600")
-Config.set("kivy", "exit_on_escape", "0")
-
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
 from kivymd.app import MDApp
 
+# from assets.task_list_screen import TaskListScreen, TaskListCreator
 from assets.task_list_screen import *
 from assets.edit_task_screen import *
 from assets.settings_screen import *
 from assets.database import Database
 
+Config.set("graphics", "resizable", True)
+Config.set("graphics", "width", "350")
+Config.set("graphics", "height", "600")
+Config.set("kivy", "exit_on_escape", "0")
 
 Builder.load_file("assets/task_list_screen.kv")
 Builder.load_file("assets/groups_view.kv")
