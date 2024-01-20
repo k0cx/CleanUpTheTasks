@@ -4,8 +4,8 @@ import hashlib
 import json
 import platform
 from cryptocode import encrypt, decrypt
-from webdav3.client import Client  # webdavclient3
-from webdav3.exceptions import WebDavException  # webdavclient3
+from webdav3.client import Client  # pip webdavclient3
+from webdav3.exceptions import WebDavException  # pip webdavclient3
 
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
@@ -15,6 +15,21 @@ from kivymd.uix.relativelayout import MDRelativeLayout
 
 
 class SettingsScreen(Screen):
+    def on_pre_enter(self):
+        sm = MDApp.get_running_app().root
+        login = sm.ids.settings_screen.ids.login_field
+        password = sm.ids.settings_screen.ids.password_container.ids.password_field
+        try:
+            settings_json = Path(__file__).parents[1] / "data/settings.json"
+            with open(settings_json, "r", encoding="utf-8") as file:
+                data = json.load(file)
+
+            key_word = self.generate_key_word()
+            login.text = decrypt(data["webdav_login"], key_word)
+            password.text = "*"
+        except:
+            pass
+
     def generate_key_word(self):
         cpu_inf = str(
             str(platform.system())
