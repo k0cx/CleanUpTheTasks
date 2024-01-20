@@ -12,7 +12,7 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.textfield import MDTextField
 
-from assets.database import Database
+from data.database import Database
 
 # Initialize db instance
 db = Database()

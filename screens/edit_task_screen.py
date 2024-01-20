@@ -16,7 +16,7 @@ from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
 
-from assets.database import Database
+from data.database import Database
 
 # Initialize db instance
 db = Database()

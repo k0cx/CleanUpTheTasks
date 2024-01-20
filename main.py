@@ -1,25 +1,24 @@
 from kivy.config import Config
-from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
-
-from kivymd.app import MDApp
-
-from assets.task_list_screen import TaskListScreen, TaskListCreator
-
-# from assets.task_list_screen import *
-from assets.edit_task_screen import *
-from assets.settings_screen import *
-from assets.database import Database
 
 Config.set("graphics", "resizable", True)
 Config.set("graphics", "width", "350")
 Config.set("graphics", "height", "600")
 Config.set("kivy", "exit_on_escape", "0")
 
-Builder.load_file("assets/task_list_screen.kv")
-Builder.load_file("assets/groups_view.kv")
-Builder.load_file("assets/edit_task_screen.kv")
-Builder.load_file("assets/settings_screen.kv")
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
+
+from kivymd.app import MDApp
+
+from screens.task_list_screen import TaskListScreen, TaskListCreator
+from screens.edit_task_screen import EditTaskScreen
+from screens.settings_screen import SettingsScreen
+
+
+Builder.load_file("screens/task_list_screen.kv")
+Builder.load_file("screens/groups_view.kv")
+Builder.load_file("screens/edit_task_screen.kv")
+Builder.load_file("screens/settings_screen.kv")
 
 
 class RootScreenManager(ScreenManager):

@@ -1,5 +1,4 @@
-.vscode/settings.json
+.vscode/
 __pycache__/
 venv/
-assets/settings.ini
-assets/settings2.ini
+data/settings.ini

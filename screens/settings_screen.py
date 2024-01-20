@@ -47,14 +47,14 @@ class SettingsScreen(Screen):
         login = sm.ids.settings_screen.ids.login_field.text
         password = sm.ids.settings_screen.ids.password_container.ids.password_field.text
         key_word = self.generate_key_word()
-        settings_ini = Path(__file__).parent.resolve() / "settings.ini"
+        settings_ini = Path(__file__).parents[1] / "data/settings.ini"
 
         with open(settings_ini, "w", encoding="utf-8") as file:
             file.write(f"{encrypt(login, key_word)}\n")
             file.write(f"{encrypt(password, key_word)}\n")
 
     def check_client(self):
-        settings_ini = Path(__file__).parent.resolve() / "settings.ini"
+        settings_ini = Path(__file__).parents[1] / "data/settings.ini"
         credentials = [
             x.strip() for x in open(settings_ini, "r", encoding="utf-8") if x.strip()
         ]
