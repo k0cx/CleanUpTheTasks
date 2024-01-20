@@ -4,8 +4,9 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 from kivymd.app import MDApp
 
-# from assets.task_list_screen import TaskListScreen, TaskListCreator
-from assets.task_list_screen import *
+from assets.task_list_screen import TaskListScreen, TaskListCreator
+
+# from assets.task_list_screen import *
 from assets.edit_task_screen import *
 from assets.settings_screen import *
 from assets.database import Database
