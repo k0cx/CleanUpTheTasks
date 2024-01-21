@@ -1,3 +1,4 @@
+import platform
 from kivy.config import Config
 
 Config.set("graphics", "resizable", True)
@@ -14,6 +15,12 @@ from screens.task_list_screen import TaskListScreen, TaskListCreator
 from screens.edit_task_screen import EditTaskScreen
 from screens.settings_screen import SettingsScreen
 
+if platform == "android":
+    from android.permissions import request_permissions, Permission
+
+    request_permissions(
+        [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+    )
 
 Builder.load_file("screens/task_list_screen.kv")
 Builder.load_file("screens/groups_view.kv")
