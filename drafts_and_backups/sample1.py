@@ -1,6 +1,7 @@
 from pathlib import Path
 import platform
 
+
 start_path = Path.home() / "cutt"
 
 
@@ -14,6 +15,4 @@ class sample:
 # start_file.touch()
 # print(sample.path_append())
 # print(start_path.exists())
-
-x = platform.system()
-print(x)
+# print(platform.system())

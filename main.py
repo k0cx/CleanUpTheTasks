@@ -17,7 +17,7 @@ from screens.task_list_screen import TaskListScreen, TaskListCreator
 from screens.edit_task_screen import EditTaskScreen
 from screens.settings_screen import SettingsScreen
 
-# if platform.system() == "android":
+# if platform == "android":
 #     from android.permissions import request_permissions, Permission
 
 #     request_permissions(
@@ -39,6 +39,16 @@ class MainApp(MDApp):
         # Setting theme
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.material_style = "M3"
+        from android.permissions import request_permissions, Permission
+
+        request_permissions(
+            [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+        )
+        # from android.storage import primary_external_storage_path
+
+        # global primary_ext_storage
+        # primary_ext_storage = primary_external_storage_path()
+        # primary_ext_storage = Path.home()
         return RootScreenManager()
 
     def on_start(self):
