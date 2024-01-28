@@ -4,8 +4,13 @@ from pathlib import Path
 
 class Database:
     def __init__(self):
-        cutt_data_dir=Path.home()/"Clean up the tasks"
-        self.con = sqlite3.connect(cutt_data_dir/"todo.db")
+        # cutt_data_dir=Path.home()/"Clean up the tasks"
+        from android.storage import primary_external_storage_path
+
+        primary_ext_storage = Path(primary_external_storage_path())
+        cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
+
+        self.con = sqlite3.connect(cutt_data_dir / "todo.db")
         self.cursor = self.con.cursor()
         self.create_task_table()  # create the tasks table
 

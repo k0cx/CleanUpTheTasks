@@ -87,6 +87,10 @@ class EditTaskScreen(Screen):
         self.menu.dismiss()
 
     def file_manager_open(self):
+        from android.storage import primary_external_storage_path
+
+        primary_ext_storage = Path(primary_external_storage_path())
+
         Window.bind(on_keyboard=self.events)
         self.manager_open = False
         self.file_manager = MDFileManager(
@@ -94,7 +98,9 @@ class EditTaskScreen(Screen):
             exit_manager=self.exit_manager,
             select_path=self.select_path,
         )
-        self.file_manager.show(str(Path.home()))
+        # self.file_manager.show(str(Path.home()))
+        self.file_manager.show(primary_external_storage_path())
+
         self.manager_open = True
 
     def select_path(self, path: str):

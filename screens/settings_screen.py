@@ -19,7 +19,13 @@ class SettingsScreen(Screen):
         sm = MDApp.get_running_app().root
         login = sm.ids.settings_screen.ids.login_field
         password = sm.ids.settings_screen.ids.password_container.ids.password_field
-        cutt_data_dir = Path.home() / "Clean up the tasks"
+
+        # cutt_data_dir = Path.home() / "Clean up the tasks"
+        from android.storage import primary_external_storage_path
+
+        primary_ext_storage = Path(primary_external_storage_path())
+        cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
+
         settings_json = cutt_data_dir / "settings.json"
         try:
             with open(settings_json, "r", encoding="utf-8") as file:
@@ -61,13 +67,23 @@ class SettingsScreen(Screen):
             "webdav_login": encrypt(login.text, key_word),
             "webdav_password": encrypt(password.text, key_word),
         }
-        cutt_data_dir = Path.home() / "Clean up the tasks"
+        # cutt_data_dir = Path.home() / "Clean up the tasks"
+        from android.storage import primary_external_storage_path
+
+        primary_ext_storage = Path(primary_external_storage_path())
+        cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
+
         settings_json = cutt_data_dir / "settings.json"
         with open(settings_json, "w", encoding="utf-8") as file:
             json.dump(data, file)
 
     def check_client(self):
-        cutt_data_dir = Path.home() / "Clean up the tasks"
+        # cutt_data_dir = Path.home() / "Clean up the tasks"
+        from android.storage import primary_external_storage_path
+
+        primary_ext_storage = Path(primary_external_storage_path())
+        cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
+
         settings_json = cutt_data_dir / "settings.json"
         with open(settings_json, "r", encoding="utf-8") as file:
             data = json.load(file)

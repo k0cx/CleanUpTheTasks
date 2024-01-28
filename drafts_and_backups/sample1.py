@@ -16,3 +16,6 @@ class sample:
 # print(sample.path_append())
 # print(start_path.exists())
 # print(platform.system())
+
+n_path = Path("/home/dvo")
+# Path(n_path / "cutt").mkdir()

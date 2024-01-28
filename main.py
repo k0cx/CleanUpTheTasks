@@ -36,23 +36,23 @@ class RootScreenManager(ScreenManager):
 
 class MainApp(MDApp):
     def build(self, *args):
-        # Setting theme
-        self.theme_cls.primary_palette = "DeepOrange"
-        self.theme_cls.material_style = "M3"
         from android.permissions import request_permissions, Permission
 
         request_permissions(
             [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
         )
-        # from android.storage import primary_external_storage_path
-
-        # global primary_ext_storage
-        # primary_ext_storage = primary_external_storage_path()
-        # primary_ext_storage = Path.home()
+        # Setting theme
+        self.theme_cls.primary_palette = "DeepOrange"
+        self.theme_cls.material_style = "M3"
         return RootScreenManager()
 
     def on_start(self):
-        cutt_data_dir = Path.home() / "Clean up the tasks"
+        # cutt_data_dir = Path.home() / "Clean up the tasks"
+        from android.storage import primary_external_storage_path
+
+        primary_ext_storage = Path(primary_external_storage_path())
+        cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
+
         if cutt_data_dir.exists() == False:
             cutt_data_dir.mkdir()
 
