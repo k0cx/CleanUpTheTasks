@@ -1,4 +1,6 @@
 import platform
+
+from pathlib import Path
 from kivy.config import Config
 
 Config.set("graphics", "resizable", True)
@@ -15,7 +17,7 @@ from screens.task_list_screen import TaskListScreen, TaskListCreator
 from screens.edit_task_screen import EditTaskScreen
 from screens.settings_screen import SettingsScreen
 
-# if platform == "android":
+# if platform.system() == "android":
 #     from android.permissions import request_permissions, Permission
 
 #     request_permissions(
@@ -40,9 +42,11 @@ class MainApp(MDApp):
         return RootScreenManager()
 
     def on_start(self):
-        """Load the saved tasks and add them to the MDList widget when the application starts"""
+        cutt_data_dir = Path.home() / "Clean up the tasks"
+        if cutt_data_dir.exists() == False:
+            cutt_data_dir.mkdir()
 
-        TaskListCreator().create_task_list_widget()
+        TaskListCreator().create_task_list_widget()  # load tasks to widget
 
 
 if __name__ == "__main__":

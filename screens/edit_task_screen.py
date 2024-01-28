@@ -1,5 +1,5 @@
-import os
 from datetime import datetime
+from pathlib import Path
 
 from kivy.core.window import Window
 from kivy.lang import Builder
@@ -94,7 +94,7 @@ class EditTaskScreen(Screen):
             exit_manager=self.exit_manager,
             select_path=self.select_path,
         )
-        self.file_manager.show(os.path.expanduser("~"))
+        self.file_manager.show(str(Path.home()))
         self.manager_open = True
 
     def select_path(self, path: str):

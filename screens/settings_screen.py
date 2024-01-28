@@ -19,16 +19,17 @@ class SettingsScreen(Screen):
         sm = MDApp.get_running_app().root
         login = sm.ids.settings_screen.ids.login_field
         password = sm.ids.settings_screen.ids.password_container.ids.password_field
+        cutt_data_dir=Path.home()/"Clean up the tasks"
+        settings_json = cutt_data_dir/"settings.json"
         try:
-            settings_json = Path(__file__).parents[1] / "data/settings.json"
             with open(settings_json, "r", encoding="utf-8") as file:
                 data = json.load(file)
 
             key_word = self.generate_key_word()
             login.text = decrypt(data["webdav_login"], key_word)
-            password.text = "*"
+            password.text = decrypt(data["webdav_password"], key_word)
         except:
-            pass
+            settings_json.touch()
 
     def generate_key_word(self):
         cpu_inf = str(
@@ -60,12 +61,14 @@ class SettingsScreen(Screen):
             "webdav_login": encrypt(login.text, key_word),
             "webdav_password": encrypt(password.text, key_word),
         }
-        settings_json = Path(__file__).parents[1] / "data/settings.json"
+        cutt_data_dir=Path.home()/"Clean up the tasks"
+        settings_json = cutt_data_dir/"settings.json"
         with open(settings_json, "w", encoding="utf-8") as file:
             json.dump(data, file)
 
     def check_client(self):
-        settings_json = Path(__file__).parents[1] / "data/settings.json"
+        cutt_data_dir=Path.home()/"Clean up the tasks"
+        settings_json = cutt_data_dir/"settings.json"
         with open(settings_json, "r", encoding="utf-8") as file:
             data = json.load(file)
 

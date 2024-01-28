@@ -4,7 +4,8 @@ from pathlib import Path
 
 class Database:
     def __init__(self):
-        self.con = sqlite3.connect(Path(__file__).parent.resolve() / "todo.db")
+        cutt_data_dir=Path.home()/"Clean up the tasks"
+        self.con = sqlite3.connect(cutt_data_dir/"todo.db")
         self.cursor = self.con.cursor()
         self.create_task_table()  # create the tasks table
 
