@@ -8,17 +8,6 @@ from webdav3.exceptions import WebDavException  # webdavclient3
 import json
 import platform
 
-# cpu_inf = str(
-#     str(platform.system())
-#     + str(platform.node())
-#     + str(platform.version())
-#     + str(platform.processor())
-#     + str(platform.architecture())
-#     + str(platform.machine())
-# ).replace(" ", "")
-# print(cpu_inf)
-# print(str(platform.architecture()).replace(" ", ""))
-
 
 def generate_key_word():
     cpu_inf = str(

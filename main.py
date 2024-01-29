@@ -17,13 +17,6 @@ from screens.task_list_screen import TaskListScreen, TaskListCreator
 from screens.edit_task_screen import EditTaskScreen
 from screens.settings_screen import SettingsScreen
 
-# if platform == "android":
-#     from android.permissions import request_permissions, Permission
-
-#     request_permissions(
-#         [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
-#     )
-
 Builder.load_file("screens/task_list_screen.kv")
 Builder.load_file("screens/groups_view.kv")
 Builder.load_file("screens/edit_task_screen.kv")
@@ -36,26 +29,28 @@ class RootScreenManager(ScreenManager):
 
 class MainApp(MDApp):
     def build(self, *args):
-        from android.permissions import request_permissions, Permission
+        if platform.system() == "Android":
+            from android.permissions import request_permissions, Permission
+            from android.storage import primary_external_storage_path
 
-        request_permissions(
-            [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
-        )
+            request_permissions(
+                [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+            )
+
+            primary_ext_storage = Path(primary_external_storage_path())
+            cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
+        else:
+            cutt_data_dir = Path.home() / "Clean up the tasks"
+
+        if cutt_data_dir.exists() == False:
+            cutt_data_dir.mkdir()
+
         # Setting theme
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.material_style = "M3"
         return RootScreenManager()
 
     def on_start(self):
-        # cutt_data_dir = Path.home() / "Clean up the tasks"
-        from android.storage import primary_external_storage_path
-
-        primary_ext_storage = Path(primary_external_storage_path())
-        cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
-
-        if cutt_data_dir.exists() == False:
-            cutt_data_dir.mkdir()
-
         TaskListCreator().create_task_list_widget()  # load tasks to widget
 
 
