@@ -1,7 +1,9 @@
 from pathlib import Path
-import platform
 
-if platform.system() == "Android":
+import platform
+from kivy.utils import platform
+
+if platform == "android":
     from android.permissions import request_permissions, Permission
     from android.storage import primary_external_storage_path
 
@@ -29,7 +31,8 @@ class sample:
 # start_file.touch()
 # print(sample.path_append())
 # print(start_path)
-print(platform.system() == "Android")
+print(platform)  # kivy.utils
+print(platform.system())  # platform
 
 # n_path = Path("/home/dvo")
 # Path(n_path / "cutt").mkdir()
