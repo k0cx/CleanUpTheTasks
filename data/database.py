@@ -4,11 +4,13 @@ from pathlib import Path
 from data.data_init import data_dir_init
 
 cutt_data_dir = data_dir_init().dir_init()
+db_file = Path(cutt_data_dir / "todo.db")
+print(db_file)
 
 
 class Database:
     def __init__(self):
-        self.con = sqlite3.connect(cutt_data_dir / "todo.db")
+        self.con = sqlite3.connect(db_file)
         self.cursor = self.con.cursor()
         self.create_task_table()  # create the tasks table
 

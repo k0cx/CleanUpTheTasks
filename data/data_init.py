@@ -10,18 +10,25 @@ class data_dir_init:
             from android.storage import primary_external_storage_path
 
             request_permissions(
-                [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+                [
+                    Permission.READ_EXTERNAL_STORAGE,
+                    Permission.WRITE_EXTERNAL_STORAGE,
+                ]
             )
 
             primary_ext_storage = Path(primary_external_storage_path())
-            cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
+            cutt_data_dir = Path(primary_ext_storage / "Documents/CUTT")
         else:
-            cutt_data_dir = Path.home() / "Clean up the tasks"
+            cutt_data_dir = Path.home() / "CUTT"
 
+        attachments_dir = cutt_data_dir / "attachments"
+        db_file = cutt_data_dir / "todo.db"
         if cutt_data_dir.exists() == False:
             cutt_data_dir.mkdir()
-        if Path(cutt_data_dir / "attachments").exists() == False:
-            Path(cutt_data_dir / "attachments").mkdir()
+        if attachments_dir.exists() == False:
+            attachments_dir.mkdir()
+        if db_file.exists() == False:
+            db_file.touch()
         return cutt_data_dir
 
 
