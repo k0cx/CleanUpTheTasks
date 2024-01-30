@@ -15,9 +15,6 @@ from kivymd.app import MDApp
 from screens.task_list_screen import TaskListScreen, TaskListCreator
 from screens.edit_task_screen import EditTaskScreen
 from screens.settings_screen import SettingsScreen
-from data.data_init import data_dir_init
-
-cutt_data_dir = data_dir_init().dir_init()
 
 Builder.load_file("screens/task_list_screen.kv")
 Builder.load_file("screens/groups_view.kv")

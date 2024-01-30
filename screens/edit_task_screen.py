@@ -1,5 +1,3 @@
-import platform
-
 from datetime import datetime
 from pathlib import Path
 
@@ -7,6 +5,7 @@ from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
+from kivy.utils import platform
 from kivy.metrics import dp  # TODO: to be removed when dropdown items ready
 
 from kivymd.app import MDApp
@@ -98,7 +97,7 @@ class EditTaskScreen(Screen):
             exit_manager=self.exit_manager,
             select_path=self.select_path,
         )
-        if platform.system() == "Android":
+        if platform == "android":
             from android.storage import primary_external_storage_path
 
             primary_ext_storage = Path(primary_external_storage_path())
