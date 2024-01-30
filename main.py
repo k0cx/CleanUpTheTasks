@@ -1,5 +1,3 @@
-import platform
-
 from pathlib import Path
 from kivy.config import Config
 
@@ -11,11 +9,15 @@ Config.set("kivy", "exit_on_escape", "0")
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 
+
 from kivymd.app import MDApp
 
 from screens.task_list_screen import TaskListScreen, TaskListCreator
 from screens.edit_task_screen import EditTaskScreen
 from screens.settings_screen import SettingsScreen
+from data.data_init import data_dir_init
+
+cutt_data_dir = data_dir_init().dir_init()
 
 Builder.load_file("screens/task_list_screen.kv")
 Builder.load_file("screens/groups_view.kv")
@@ -29,21 +31,12 @@ class RootScreenManager(ScreenManager):
 
 class MainApp(MDApp):
     def build(self, *args):
-        if platform.system() == "Android":
-            from android.permissions import request_permissions, Permission
-            from android.storage import primary_external_storage_path
+        # if platform == "Android":
+        #     from android.permissions import request_permissions, Permission
 
-            request_permissions(
-                [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
-            )
-
-            primary_ext_storage = Path(primary_external_storage_path())
-            cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
-        else:
-            cutt_data_dir = Path.home() / "Clean up the tasks"
-
-        if cutt_data_dir.exists() == False:
-            cutt_data_dir.mkdir()
+        #     request_permissions(
+        #         [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+        #     )
 
         # Setting theme
         self.theme_cls.primary_palette = "DeepOrange"

@@ -19,7 +19,9 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
 
 from data.database import Database
+from data.data_init import data_dir_init
 
+cutt_data_dir = data_dir_init().dir_init()
 # Initialize db instance
 db = Database()
 

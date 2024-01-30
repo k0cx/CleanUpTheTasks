@@ -1,18 +1,13 @@
-import platform
 import sqlite3
 from pathlib import Path
+
+from data.data_init import data_dir_init
+
+cutt_data_dir = data_dir_init().dir_init()
 
 
 class Database:
     def __init__(self):
-        if platform.system() == "Android":
-            from android.storage import primary_external_storage_path
-
-            primary_ext_storage = Path(primary_external_storage_path())
-            cutt_data_dir = Path(primary_ext_storage / "Clean up the tasks")
-        else:
-            cutt_data_dir = Path.home() / "Clean up the tasks"
-
         self.con = sqlite3.connect(cutt_data_dir / "todo.db")
         self.cursor = self.con.cursor()
         self.create_task_table()  # create the tasks table
