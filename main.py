@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from kivy.config import Config
 
 Config.set("graphics", "resizable", True)
@@ -8,7 +9,6 @@ Config.set("kivy", "exit_on_escape", "0")
 
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-
 
 from kivymd.app import MDApp
 
@@ -28,7 +28,8 @@ class RootScreenManager(ScreenManager):
 
 class MainApp(MDApp):
     def build(self, *args):
-        # if platform == "Android":
+        # from kivy.utils import platform
+        # if platform == "android":
         #     from android.permissions import request_permissions, Permission
 
         #     request_permissions(

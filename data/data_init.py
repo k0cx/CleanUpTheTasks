@@ -20,6 +20,8 @@ class data_dir_init:
 
         if cutt_data_dir.exists() == False:
             cutt_data_dir.mkdir()
+        if Path(cutt_data_dir / "attachments").exists() == False:
+            Path(cutt_data_dir / "attachments").mkdir()
         return cutt_data_dir
 
 

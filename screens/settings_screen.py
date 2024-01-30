@@ -2,9 +2,8 @@ import hashlib
 import json
 import platform
 
-from pathlib import Path
-
 from cryptocode import encrypt, decrypt
+from pathlib import Path
 from webdav3.client import Client  # pip webdavclient3
 from webdav3.exceptions import WebDavException  # pip webdavclient3
 
@@ -86,7 +85,6 @@ class SettingsScreen(Screen):
             # client.verify = False
             client.list()
             toast(text="OK", duration=2)
-
         except WebDavException as exception:
             print(exception)
             toast(text="FAULT", duration=5)
