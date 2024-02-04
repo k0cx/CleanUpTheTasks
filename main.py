@@ -14,6 +14,7 @@ from kivymd.app import MDApp
 
 from screens.task_list_screen import TaskListScreen, TaskListCreator
 from screens.edit_task_screen import EditTaskScreen
+
 from screens.settings_screen import SettingsScreen
 
 Builder.load_file("screens/task_list_screen.kv")

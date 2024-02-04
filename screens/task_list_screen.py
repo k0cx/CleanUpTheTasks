@@ -23,6 +23,8 @@ class GroupsView(MDBoxLayout):
 
 
 class TaskListScreen(Screen):
+    pass
+
     def open_settings(self):
         sm = MDApp.get_running_app().root
         sm.transition = SlideTransition(direction="left")

@@ -4,9 +4,8 @@ import platform
 
 from cryptocode import encrypt, decrypt
 from pathlib import Path
-
-# from webdav3.client import Client  # pip webdavclient3
-# from webdav3.exceptions import WebDavException  # pip webdavclient3
+from webdav3.client import Client  # pip webdavclient3
+from webdav3.exceptions import WebDavException  # pip webdavclient3
 
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
@@ -71,28 +70,24 @@ class SettingsScreen(Screen):
 
     def check_client(self):
         settings_json = cutt_data_dir / "settings.json"
+        with open(settings_json, "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        key_word = self.generate_key_word()
+        decrypt_data = {
+            "webdav_login": decrypt(data["webdav_login"], key_word),
+            "webdav_password": decrypt(data["webdav_password"], key_word),
+        }
+        data.update(decrypt_data)
+
         try:
-            with open(settings_json, "r", encoding="utf-8") as file:
-                data = json.load(file)
-
-            key_word = self.generate_key_word()
-            decrypt_data = {
-                "webdav_login": decrypt(data["webdav_login"], key_word),
-                "webdav_password": decrypt(data["webdav_password"], key_word),
-            }
-            data.update(decrypt_data)
-            toast(text="check test", duration=3)
-
-            # try:
-            #     client = Client(data)
-            #     # client.verify = False
-            #     client.list()
-            #     toast(text="OK", duration=2)
-            # except WebDavException as exception:
-            #     print(exception)
-            #     toast(text="FAULT", duration=5)
-        except:
-            toast(text="save first", duration=3)
+            client = Client(data)
+            # client.verify = False
+            client.list()
+            toast(text="OK", duration=2)
+        except WebDavException as exception:
+            print(exception)
+            toast(text="FAULT", duration=5)
 
     def back_action(self):
         sm = MDApp.get_running_app().root
