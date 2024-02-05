@@ -1,30 +1,30 @@
+from cryptography.fernet import Fernet
 from pathlib import Path
-
-# import platform
-from kivy.utils import platform
-
-from data.data_init import data_dir_init
-
-data_dir_init()
-
-print(cutt_data_dir)
-
-start_path = Path.home() / "cutt"
+import json
 
 
-class sample:
-    def path_append():
-        return str(start_path) + "/dir"
+cutt_data_dir = Path.home() / "CUTT"
 
+generated_key = Fernet.generate_key()
+decoded_key = generated_key.decode("utf-8")
+cipher_key = decoded_key.encode("utf-8")
+print("======")
+print(generated_key)
+print(decoded_key)
+print(cipher_key)
 
-# n_path = Path("/home/dvo")
-# Path(n_path / "cutt").mkdir()
+cipher = Fernet(cipher_key)
 
-# start_path.mkdir()
-# start_file = start_path / "tseting1.json"
-# start_file.touch()
-# print(sample.path_append())
-# print(start_path)
+data = {"client_uid": cipher_key.decode("utf-8"), "login": "login"}
 
-print(platform)  # kivy.utils
-# print(platform.system())  # platform
+settings_json = cutt_data_dir / "settings.json"
+with open(settings_json, "w", encoding="utf-8") as file:
+    json.dump(data, file, indent=4)
+
+text = b"My super secret message"
+encrypted_text = cipher.encrypt(text)
+
+print(encrypted_text)
+
+decrypted_text = cipher.decrypt(encrypted_text)
+print(decrypted_text.decode("utf-8"))  # 'My super secret message'

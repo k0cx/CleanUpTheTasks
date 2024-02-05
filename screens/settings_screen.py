@@ -1,8 +1,6 @@
-import hashlib
 import json
-import platform
 
-from cryptocode import encrypt, decrypt
+from cryptography.fernet import Fernet
 from pathlib import Path
 
 # from webdav3.client import Client  # pip webdavclient3
@@ -17,6 +15,7 @@ from kivymd.uix.relativelayout import MDRelativeLayout
 from data.data_init import data_dir_init
 
 cutt_data_dir = data_dir_init().dir_init()
+settings_json = cutt_data_dir / "settings.json"
 
 
 class SettingsScreen(Screen):
@@ -24,61 +23,58 @@ class SettingsScreen(Screen):
         sm = MDApp.get_running_app().root
         login = sm.ids.settings_screen.ids.login_field
         password = sm.ids.settings_screen.ids.password_container.ids.password_field
-        settings_json = cutt_data_dir / "settings.json"
-        try:
+        if settings_json.exists():
             with open(settings_json, "r", encoding="utf-8") as file:
                 data = json.load(file)
 
-            key_word = self.generate_key_word()
-            login.text = decrypt(data["webdav_login"], key_word)
-            password.text = decrypt(data["webdav_password"], key_word)
-        except:
+            b_word = Fernet(data["client_uid"].encode("utf-8"))
+            b_login = data["webdav_login"].encode("utf-8")
+            b_password = data["webdav_password"].encode("utf-8")
+            login.text = b_word.decrypt(b_login).decode("utf-8")
+            password.text = b_word.decrypt(b_password).decode("utf-8")
+        else:
             settings_json.touch()
-
-    def generate_key_word(self):
-        cpu_inf = str(
-            str(platform.system())
-            + str(platform.node())
-            + str(platform.version())
-            + str(platform.processor())
-            + str(platform.architecture())
-            + str(platform.machine())
-        ).replace(" ", "")
-        d = hashlib.sha256()
-        d.update(cpu_inf.encode("utf-8", errors="ignore"))
-        return d.hexdigest()
-
-    def encrypt_word(word: str, key_word: str) -> str:
-        return encrypt(key_word)
-
-    def decrypt_word(word: str, key_word: str) -> str:
-        return decrypt(word, key_word)
+            data = {
+                "client_uid": Fernet.generate_key().decode("utf-8"),
+                "webdav_hostname": "https://webdav.cloud.mail.ru",
+                "webdav_login": "",
+                "webdav_password": "",
+            }
+            with open(settings_json, "w", encoding="utf-8") as file:
+                json.dump(data, file, indent=4)
 
     def crypt_input(self):
-        key_word = self.generate_key_word()
         sm = MDApp.get_running_app().root
         login = sm.ids.settings_screen.ids.login_field
         password = sm.ids.settings_screen.ids.password_container.ids.password_field
+        b_login = login.text.encode("utf-8")
+        b_password = password.text.encode("utf-8")
 
-        data = {
-            "webdav_hostname": "https://webdav.cloud.mail.ru",
-            "webdav_login": encrypt(login.text, key_word),
-            "webdav_password": encrypt(password.text, key_word),
+        with open(settings_json, "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        b_word = Fernet(data["client_uid"].encode("utf-8"))
+
+        inp_data = {
+            "webdav_login": b_word.encrypt(b_login).decode("utf-8"),
+            "webdav_password": b_word.encrypt(b_password).decode("utf-8"),
         }
-        settings_json = cutt_data_dir / "settings.json"
+        data.update(inp_data)
+
         with open(settings_json, "w", encoding="utf-8") as file:
-            json.dump(data, file)
+            json.dump(data, file, indent=4)
 
     def check_client(self):
-        settings_json = cutt_data_dir / "settings.json"
         try:
             with open(settings_json, "r", encoding="utf-8") as file:
                 data = json.load(file)
 
-            key_word = self.generate_key_word()
+            b_word = Fernet(data["client_uid"].encode("utf-8"))
+            b_login = data["webdav_login"].encode("utf-8")
+            b_password = data["webdav_password"].encode("utf-8")
             decrypt_data = {
-                "webdav_login": decrypt(data["webdav_login"], key_word),
-                "webdav_password": decrypt(data["webdav_password"], key_word),
+                "webdav_login": b_word.decrypt(b_login).decode("utf-8"),
+                "webdav_password": b_word.decrypt(b_password).decode("utf-8"),
             }
             data.update(decrypt_data)
             toast(text="check test", duration=3)
