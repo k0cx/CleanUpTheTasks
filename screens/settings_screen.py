@@ -3,8 +3,8 @@ import json
 from cryptography.fernet import Fernet
 from pathlib import Path
 
-# from webdav3.client import Client  # pip webdavclient3
-# from webdav3.exceptions import WebDavException  # pip webdavclient3
+from webdav3.client import Client  # pip webdavclient3
+from webdav3.exceptions import WebDavException  # pip webdavclient3
 
 from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 
@@ -28,10 +28,16 @@ class SettingsScreen(Screen):
                 data = json.load(file)
 
             b_word = Fernet(data["client_uid"].encode("utf-8"))
-            b_login = data["webdav_login"].encode("utf-8")
-            b_password = data["webdav_password"].encode("utf-8")
-            login.text = b_word.decrypt(b_login).decode("utf-8")
-            password.text = b_word.decrypt(b_password).decode("utf-8")
+            if data["webdav_login"] == "":
+                login.text = ""
+            else:
+                b_login = data["webdav_login"].encode("utf-8")
+                login.text = b_word.decrypt(b_login).decode("utf-8")
+            if data["webdav_password"] == "":
+                login.text = ""
+            else:
+                b_password = data["webdav_password"].encode("utf-8")
+                password.text = b_word.decrypt(b_password).decode("utf-8")
         else:
             settings_json.touch()
             data = {
@@ -76,19 +82,19 @@ class SettingsScreen(Screen):
                 "webdav_login": b_word.decrypt(b_login).decode("utf-8"),
                 "webdav_password": b_word.decrypt(b_password).decode("utf-8"),
             }
+            data.pop("client_uid", None)
             data.update(decrypt_data)
-            toast(text="check test", duration=3)
 
-            # try:
-            #     client = Client(data)
-            #     # client.verify = False
-            #     client.list()
-            #     toast(text="OK", duration=2)
-            # except WebDavException as exception:
-            #     print(exception)
-            #     toast(text="FAULT", duration=5)
+            try:
+                client = Client(data)
+                # client.verify = False
+                client.list()
+                toast(text="OK", duration=2)
+            except WebDavException as exception:
+                print(exception)
+                toast(text=exception, duration=5)
         except:
-            toast(text="save first", duration=3)
+            toast(text="save login and password first", duration=3)
 
     def back_action(self):
         sm = MDApp.get_running_app().root
