@@ -126,6 +126,7 @@ android.api = 31
 # the default, you will be shown the license when first running
 # buildozer.
 # android.accept_sdk_license = False
+android.accept_sdk_license = True
 
 # (str) Android entry point, default is ok for Kivy-based app
 #android.entrypoint = org.renpy.android.PythonActivity

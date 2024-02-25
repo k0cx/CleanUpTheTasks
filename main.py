@@ -1,4 +1,4 @@
-from pathlib import Path
+# from pathlib import Path
 
 from kivy.config import Config
 
@@ -28,7 +28,7 @@ class RootScreenManager(ScreenManager):
 
 
 class MainApp(MDApp):
-    def build(self, *args):
+    def build(self):
         # Setting theme
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.material_style = "M3"
