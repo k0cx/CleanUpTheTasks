@@ -28,7 +28,7 @@ class TaskListScreen(Screen):
     def open_settings(self):
         sm = MDApp.get_running_app().root
         sm.transition = SlideTransition(direction="left")
-        sm.current = "settings screen"
+        sm.current = "Settings"
 
 
 class TaskListCreator:

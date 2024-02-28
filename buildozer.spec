@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy, kivymd, sqlite3, pillow, cryptography, webdavclient3
+requirements = python3, kivy, kivymd, sqlite3, pillow, cryptography, webdavclient3, lxml==5.1.0, python-dateutil
 #, pycurl
 # requirements = python3, kivy, kivymd, sqlite3, webdavclient3, pillow, android
 

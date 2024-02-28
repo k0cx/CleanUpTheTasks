@@ -21,7 +21,7 @@ settings_json = cutt_data_dir / "settings.json"
 class SettingsScreen(Screen):
     def on_pre_enter(self):
         sm = MDApp.get_running_app().root
-        login = sm.ids.settings_screen.ids.login_field
+        login = sm.get_screen("Settings").ids.login_field
         password = sm.ids.settings_screen.ids.password_container.ids.password_field
         if settings_json.exists():
             with open(settings_json, "r", encoding="utf-8") as file:
