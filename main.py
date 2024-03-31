@@ -11,13 +11,14 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 
 from kivymd.app import MDApp
 
-from screens.task_list_screen import TaskListScreen, TaskListCreator
-from screens.edit_task_screen import EditTaskScreen
+from screens.task_list_screen import TaskListScreen, TaskListCreator, EditTaskView
+
+# from screens.edit_task_screen import EditTaskScreen
 from screens.settings_screen import SettingsScreen
 
 Builder.load_file("screens/task_list_screen.kv")
-Builder.load_file("screens/groups_view.kv")
-Builder.load_file("screens/edit_task_screen.kv")
+Builder.load_file("screens/edit_task_view.kv")
+# Builder.load_file("screens/edit_task_screen.kv")
 Builder.load_file("screens/settings_screen.kv")
 
 

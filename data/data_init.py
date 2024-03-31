@@ -21,12 +21,12 @@ class data_dir_init:
         else:
             cutt_data_dir = Path.home() / "CUTT"
 
-        attachments_dir = cutt_data_dir / "attachments"
+        # attachments_dir = cutt_data_dir / "attachments"
         db_file = cutt_data_dir / "todo.db"
         if cutt_data_dir.exists() == False:
             cutt_data_dir.mkdir()
-        if attachments_dir.exists() == False:
-            attachments_dir.mkdir()
+        # if attachments_dir.exists() == False:
+        #     attachments_dir.mkdir()
         if db_file.exists() == False:
             db_file.touch()
         return cutt_data_dir

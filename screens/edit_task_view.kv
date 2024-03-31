@@ -1,0 +1,97 @@
+<EditTaskView@MDBottomNavigationItem>:
+    MDBoxLayout:
+        orientation: "vertical"
+        # padding:"10dp"
+        id: edit_container
+        spacing: "10dp"
+
+        MDTextField:
+            id: task_text
+            text: ""
+            text_color_normal: 0, 0, 0, 1
+            max_text_length: 150
+            max_length_text_color: "red"
+            required: True
+            hint_text: "Task text"
+            scroll_y: 1
+            size_hint: .9, 1
+            pos_hint: {"center_x": .5, "center_y": .5}
+            multiline: True
+            mode: "rectangle"
+
+        MDGridLayout:
+            rows: 2
+            cols: 2
+            adaptive_height: True
+            size_hint_x: .9
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+            MDTextField:
+                id: date_text
+                icon_left: "calendar"
+                icon_left_color_normal: 0, 0, 0, 1
+                text_color_normal: 0, 0, 0, 1
+                halign: "right"
+                hint_text: "date"
+                on_focus: if self.focus: root.date_picker()
+
+            MDIconButton:
+                icon: "minus-thick"
+                on_release: date_text.text = ""
+    
+            MDLabel:
+                text: "Mark as done"
+                adaptive_height: True
+                halign: "left"
+                pos_hint: {"center_y": .5}
+                # theme_text_color: "Custom"
+                # text_color: "gray"
+
+            MDCheckbox:
+                size_hint: None, None
+                size: "36dp", "36dp"
+                pos_hint: {"center_y": .5}
+
+        MDGridLayout:
+            orientation: "bt-rl"
+            size_hint_x: 1
+            adaptive_height: True
+            rows: 1
+            padding: "10dp", "10dp", "20dp", "30dp"
+            spacing: "10dp"
+
+            MDFlatButton:
+                text: "[b]SAVE[/b]"
+                font_size: "18sp"
+                pos_hint: {"center_y": .5}
+                on_release: 
+                    root.write_task(task_text, date_text.text)
+                    app.root.get_screen(name="task list screen").ids.container.clear_widgets()
+                    app.on_start()
+                    # root.back_action()
+
+            MDLabel:
+                # spacer            
+            MDLabel:
+                id: task_id
+                text: ""
+                # adaptive_height: True
+                halign: "left"
+                font_size: "14sp"
+                pos_hint: {"center_y": .5}
+                padding: 0, "10dp", 0, 0
+                theme_text_color: "Custom"
+                text_color: "lightgray"
+
+            MDIconButton:
+                icon: "trash-can-outline"
+                theme_text_color: "Custom"
+                text_color: 1, 0, 0, 1
+                icon_size: "28sp"
+                pos_hint: {"center_y": .5}
+                padding: 0, "10dp", 0, 0
+                # TODO: confirmation dialog
+                on_release:
+                    root.delete_task(task_id.text)
+                    app.root.get_screen(name="task list screen").ids.container.clear_widgets()
+                    app.on_start()

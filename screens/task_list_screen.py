@@ -11,6 +11,8 @@ from kivymd.uix.list import TwoLineAvatarIconListItem, ILeftBodyTouch
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.textfield import MDTextField
+from kivymd.uix.pickers import MDDatePicker
+from kivymd.toast.kivytoast.kivytoast import toast
 
 from data.database import Database
 
@@ -18,17 +20,8 @@ from data.database import Database
 db = Database()
 
 
-class GroupsView(MDBoxLayout):
-    pass
-
-
 class TaskListScreen(Screen):
     pass
-
-    def open_settings(self):
-        sm = MDApp.get_running_app().root
-        sm.transition = SlideTransition(direction="left")
-        sm.current = "Settings"
 
 
 class TaskListCreator:
@@ -62,7 +55,6 @@ class TaskListCreator:
                     ).ids.container.add_widget(add_task)
         except Exception as e:
             print(e)
-            pass
 
 
 class ListItemWithCheckbox(TwoLineAvatarIconListItem):
@@ -89,8 +81,7 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
 
     def edit_task(self, the_list_item):
         task_data = db.get_task_data(the_list_item.pk)
-        print(task_data)
-        edit_task_ids = MDApp.get_running_app().root.ids.edit_task_screen.ids
+        edit_task_ids = MDApp.get_running_app().root.ids.edit_container.ids
 
         edit_task_ids["task_id"].text = "id:" + str(task_data[0])
         edit_task_ids["task_text"].text = task_data[2]
@@ -99,3 +90,30 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
 
 class LeftCheckbox(ILeftBodyTouch, MDCheckbox):
     """Custom left container"""
+
+
+class EditTaskView(MDBoxLayout):
+    def date_picker(self):
+        """Opens the date picker"""
+        date_dialog = MDDatePicker()
+        date_dialog.bind(on_save=self.set_task_date)
+        date_dialog.open()
+
+    def set_task_date(self, instance, value, date_range):
+        """This function gets the date from the date picker
+        and converts in a more friendly form
+        then changes the date label on the dialog"""
+        date = value.strftime("%Y-%m-%d")
+        self.ids.date_text.text = str(date)
+
+    def write_task(self, task, task_date):
+        if self.ids.task_id.text == "":
+            db.create_task(task.text, task_date)
+            toast(text="added", duration=2)
+        else:
+            db.update_task(self.ids.task_id.text[3:], task.text, task_date)
+            toast(text="updated", duration=2)
+
+    def delete_task(self, taskid):
+        db.delete_task(taskid[3:])
+        toast(text="deleted", duration=2)
