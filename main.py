@@ -4,6 +4,7 @@ Config.set("graphics", "resizable", True)
 Config.set("graphics", "width", "350")
 Config.set("graphics", "height", "600")
 Config.set("kivy", "exit_on_escape", "0")
+Config.set("kivy", "window_icon", "assets/cutt-icon.png")
 
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -29,6 +30,7 @@ class MainApp(MDApp):
         # Setting theme
         self.theme_cls.primary_palette = "DeepOrange"
         self.theme_cls.material_style = "M3"
+        self.icon = "assets/cutt-icon.png"
         return RootScreenManager()
 
     def on_start(self):
