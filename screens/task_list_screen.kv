@@ -45,14 +45,18 @@
                 # badge_icon: "numeric-5"
 
                 EditTaskView:
+                    id: edit_task_view
 
             MDBottomNavigationItem:
                 name: "settings"
                 text: "Settings"
                 icon: "cog-outline"
-                # on_tab_release:
-                #     app.root.transition.direction = "left"
-                #     app.root.current = "settings screen"
+                on_tab_release:
+                    root.tab_release()
+                
+
+                SettingsView:
+                    id: settings_view
 
 
 <ListItemWithCheckbox>:
@@ -61,7 +65,7 @@
     on_release:
         # app.root.transition.direction = "left"
         # app.root.current = "edit task screen"
-        app.root.get_screen(name="task list screen").ids.edit_task(the_list_item)
+        root.edit_task(the_list_item)
 
     LeftCheckbox:
         id: check

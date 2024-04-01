@@ -15,13 +15,15 @@ from kivymd.uix.pickers import MDDatePicker
 from kivymd.toast.kivytoast.kivytoast import toast
 
 from data.database import Database
+from screens.settings_view import SettingsView
 
 # Initialize db instance
 db = Database()
 
 
 class TaskListScreen(Screen):
-    pass
+    def tab_release(self):
+        SettingsView().on_settings_enter()
 
 
 class TaskListCreator:
@@ -74,46 +76,25 @@ class ListItemWithCheckbox(TwoLineAvatarIconListItem):
         else:
             the_list_item.text = str(db.mark_task_as_incomplete(the_list_item.pk))
 
-    def delete_item(self, the_list_item):
-        """Delete the task"""
-        self.parent.remove_widget(the_list_item)
-        db.delete_task(the_list_item.pk)
+    # def delete_item(self, the_list_item):
+    #     """Delete the task"""
+    #     self.parent.remove_widget(the_list_item)
+    #     db.delete_task(the_list_item.pk)
 
     def edit_task(self, the_list_item):
         task_data = db.get_task_data(the_list_item.pk)
-        edit_task_ids = MDApp.get_running_app().root.ids.edit_container.ids
-
+        edit_task_ids = (
+            MDApp.get_running_app()
+            .root.get_screen(name="task list screen")
+            .ids.edit_task_view.ids
+        )
         edit_task_ids["task_id"].text = "id:" + str(task_data[0])
         edit_task_ids["task_text"].text = task_data[2]
         edit_task_ids["date_text"].text = task_data[3]
+        MDApp.get_running_app().root.get_screen(
+            name="task list screen"
+        ).ids.bottom_nav_bar.switch_tab("edit_task_view")
 
 
 class LeftCheckbox(ILeftBodyTouch, MDCheckbox):
     """Custom left container"""
-
-
-class EditTaskView(MDBoxLayout):
-    def date_picker(self):
-        """Opens the date picker"""
-        date_dialog = MDDatePicker()
-        date_dialog.bind(on_save=self.set_task_date)
-        date_dialog.open()
-
-    def set_task_date(self, instance, value, date_range):
-        """This function gets the date from the date picker
-        and converts in a more friendly form
-        then changes the date label on the dialog"""
-        date = value.strftime("%Y-%m-%d")
-        self.ids.date_text.text = str(date)
-
-    def write_task(self, task, task_date):
-        if self.ids.task_id.text == "":
-            db.create_task(task.text, task_date)
-            toast(text="added", duration=2)
-        else:
-            db.update_task(self.ids.task_id.text[3:], task.text, task_date)
-            toast(text="updated", duration=2)
-
-    def delete_task(self, taskid):
-        db.delete_task(taskid[3:])
-        toast(text="deleted", duration=2)

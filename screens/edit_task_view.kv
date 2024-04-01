@@ -2,7 +2,7 @@
     MDBoxLayout:
         orientation: "vertical"
         # padding:"10dp"
-        id: edit_container
+        # id: edit_container
         spacing: "10dp"
 
         MDTextField:
@@ -60,7 +60,7 @@
             padding: "10dp", "10dp", "20dp", "30dp"
             spacing: "10dp"
 
-            MDFlatButton:
+            MDFillRoundFlatButton:
                 text: "[b]SAVE[/b]"
                 font_size: "18sp"
                 pos_hint: {"center_y": .5}
@@ -69,6 +69,12 @@
                     app.root.get_screen(name="task list screen").ids.container.clear_widgets()
                     app.on_start()
                     # root.back_action()
+            MDFillRoundFlatButton:
+                # halign: "right"
+                text: "Clear"
+                font_size: "18sp"
+                pos_hint: {"center_y": .5}
+                on_release: root.clear_edit_fields()
 
             MDLabel:
                 # spacer            
@@ -93,5 +99,6 @@
                 # TODO: confirmation dialog
                 on_release:
                     root.delete_task(task_id.text)
+                    root.clear_edit_fields()
                     app.root.get_screen(name="task list screen").ids.container.clear_widgets()
                     app.on_start()
