@@ -62,17 +62,18 @@
 
             MDFillRoundFlatButton:
                 text: "[b]SAVE[/b]"
-                font_size: "18sp"
+                font_size: "16sp"
                 pos_hint: {"center_y": .5}
                 on_release: 
                     root.write_task(task_text, date_text.text)
+                    root.clear_edit_fields()
                     app.root.get_screen(name="task list screen").ids.container.clear_widgets()
                     app.on_start()
                     # root.back_action()
             MDFillRoundFlatButton:
                 # halign: "right"
                 text: "Clear"
-                font_size: "18sp"
+                font_size: "16sp"
                 pos_hint: {"center_y": .5}
                 on_release: root.clear_edit_fields()
 
