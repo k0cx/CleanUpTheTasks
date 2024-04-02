@@ -6,3 +6,4 @@ data/settings.json
 .idea/
 bin/
 .ipynb_checkpoints
+build/
